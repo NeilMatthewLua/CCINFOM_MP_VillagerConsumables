@@ -1,0 +1,16 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-size: cover;
+}
+
+.container {
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    padding-bottom: 7px;
+}
+
+.submit{
+    padding-top: 25px;
+    text-align: center;
+}

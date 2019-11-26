@@ -1,0 +1,26 @@
+{
+  "name": "CCINFOM_MP_VillagerConsumables",
+  "version": "1.0.0",
+  "description": "Install the following by pasting in CMD Terminal:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables/issues"
+  },
+  "homepage": "https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
+}
