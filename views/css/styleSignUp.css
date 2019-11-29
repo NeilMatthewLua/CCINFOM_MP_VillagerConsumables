@@ -205,12 +205,10 @@ body {
     align-items: center;
     padding: 15px;
     position: relative;
-    /* background-color: #fff; */
   }
   
   .wrap-login100 {
     width: 500px;
-    /* background: #fff; */
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
@@ -236,7 +234,7 @@ body {
     line-height: 1.2;
     text-align: center;
   
-    display: block;
+    /* display: block; */
     position: absolute;
     width: 100%;
     top: 0;
