@@ -1,5 +1,5 @@
 module.exports = {
   home: (req, res) => {
-    res.render("addOrder.ejs", {});
+    res.render("GL.ejs", {});
   }
 };

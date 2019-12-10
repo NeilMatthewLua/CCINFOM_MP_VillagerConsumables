@@ -12,62 +12,60 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
 
+
   <body>
     <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-      <div class="container">
-        <a class="navbar-brand" href="#" style="font-size: 36px;">BAYANETWORK</a
-        ><button
-          data-toggle="collapse"
-          class="navbar-toggler"
-          data-target="#navcol-1"
-        >
-          <span class="sr-only">Toggle navigation</span
-          ><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item" role="presentation">
-              <a
-                class="nav-link active"
-                href="./GL.ejs"
-                style="font-size: 36px;"
-                >GL</a
-              >
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="./M1.ejs" style="font-size: 36px;"
-                >M1</a
-              >
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="./M2.ejs" style="font-size: 36px;"
-                >M2</a
-              >
-            </li>
-          </ul>
+        <div class="container">
+          <a class="navbar-brand" href="/" style="font-size: 36px;">BAYANETWORK</a>
+          <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navcol-1">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" href="/" style="font-size: 36px;">GL</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" href="/orderDetails" style="font-size: 36px;">
+                      M1
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" href="/paymentDetails" style="font-size: 36px;">
+                      M2
+                  </a>
+                </li>
+              </ul>
+            </div>
         </div>
-      </div>
     </nav>
+
     <div class="container">
-      <button class="btn btn-primary" type="button" style="margin-right: 10px;">
-        ADD ORDER</button
-      ><button
-        class="btn btn-primary"
-        type="button"
-        style="margin-right: 10px;"
-      >
-        UPDATE ORDER</button
-      ><button
-        class="btn btn-primary"
-        type="button"
-        style="margin-right: 10px;"
-      >
-        SEARCH ORDER
-      </button>
-      <button class="btn btn-primary" type="button" style="margin-right: 10px;">
-        DELETE ORDER</button
-      ><button class="btn btn-primary" type="button">GENERATE REPORT</button>
-    </div>
+      
+        <button class="btn btn-primary" type="button" style="margin-right: 10px;">
+          ADD ORDER
+        </button>
+  
+        <button class="btn btn-primary" type="button" style="margin-right: 10px;">
+          UPDATE ORDER
+        </button>
+        
+        <button class="btn btn-primary" type="button" style="margin-right: 10px;">
+          SEARCH ORDER
+        </button>
+  
+        <button class="btn btn-primary" type="button" style="margin-right: 10px">
+            DELETE ORDER
+          </button>
+  
+          <button class="btn btn-primary" type="button">
+            GENERATE REPORT
+          </button>
+  
+      </div>
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   </body>

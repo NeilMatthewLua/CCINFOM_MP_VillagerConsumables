@@ -1,9 +1,55 @@
-<% include views/templates/header.ejs %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <title>Page</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+        <div class="container">
+          <a class="navbar-brand" href="#" style="font-size: 36px;">BAYANETWORK</a>
+          <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active"
+                  href="/"
+                  style="font-size: 36px;"
+                  >GL</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" href="/orderDetails" style="font-size: 36px;">
+                    M1
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" href="/paymentDetails" style="font-size: 36px;">
+                    M2
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <% if (message != '') { %>
-            <p class="text-center text-danger"><%= message %></p>
-        <% } %>
-        <form class="add-player-form" action="/add" method="post">
+        <%if (message) {%>
+            <p class="text-center text-danger"><%= message%></p>
+        <%} %>
+        <form class="add-player-form" action="/ordersAdd" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="orderID" id="orderID" 
@@ -11,7 +57,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="order_date" id="order_date" 
-                            placeholder="Order Date" required>
+                            placeholder="Order Date (YYYY-MM-DD)" required>
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="payment_type" id="payment_type" 
@@ -23,11 +69,11 @@
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="cancelled_by" id="cancelled_by" 
-                            placeholder="Cancelled By (S/R)" required>
+                            placeholder="Cancelled By (U/S)" required>
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="cancel_date" id="cancel_date" 
-                            placeholder="Cancel Date" required>
+                            placeholder="Cancel Date (YYYY-MM-DD)" required>
                 </div>
                 <div class="form-group col-md-4">
                     <input type="text" class="form-control" name="cancel_reason" id="cancel_reason" 
@@ -44,18 +90,13 @@
                 </div>
                 <div class="form-group col-md-4">
                     <input type="number"
-                    min = '1' max = '5' class="form-control" name="politness" id="politness" 
+                    min = '1' max = '5' class="form-control" name="politeness" id="politeness" 
                             placeholder="Politeness (1-5)" required>
                 </div>
                 <div class="form-group col-md-4">
                     <input type="number"
                     min = '1' max = '5' class="form-control" name="cust_satisfaction" id="cust_satisfaction" 
                             placeholder="Cust Satis (1-5)" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <input type="number"
-                    min = '1' max = '5' class="form-control" name="total_rating" id="total_rating" 
-                            placeholder="Total Rating(1-5)" required>
                 </div>
                 <div class="form-group col-md-4">
                     <input type="number"
@@ -73,10 +114,11 @@
                             placeholder="Resident Email" required>
                 </div>
                 <div class="form-group col-md-4">
-                    <input type="number" 
+                    <input type="text" 
                     class="form-control" name="resegroup_ID" id="resegroup_ID" 
-                            placeholder="Resident Group ID" required>
+                            placeholder="Group ID" required>
                 </div>
+                
             </div>
             <button type="submit" class="btn btn-primary float-right">Add Student</button>
         </form>

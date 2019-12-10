@@ -7,6 +7,8 @@ const port = 8000;
 
 const { home } = require("./routes/index");
 const orders = require("./routes/orders");
+const orderDetails = require("./routes/orderDetails");
+const paymentDetails = require("./routes/paymentDetails");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -37,14 +39,21 @@ app.get("/", home);
 
 app.get("/ordersAdd", orders.addOrderPage);
 app.post("/ordersAdd", orders.createOrder);
+// app.get("/ordersUpdate", orders.updateOrderPage);
+// app.post("/ordersUpdate", orders.updateOrder);
+// app.get("/ordersSearch", orders.searchOrderPage);
+// app.post("/ordersSearch", orders.searchOrder);
 
-// app.get('/add', studentRoute.addStudent);
-// app.post('/signIn', signIn.validation)
-// app.get('/edit/:id', updateStudentPage);
-// app.get('/delete/:id', deleteStudent);
+app.get("/orderDetails", orderDetails.orderDetailsPage);
+// app.get("/ordersDetailsAdd", orders.addOrderDetailsPage)
+// app.post("/ordersDetailsAdd", orders.createOrderDetails);
+// app.get("/ordersDetailsUpdate", orders.updateOrderDetailsPage)
+// app.post("/ordersDetailsUpdate", orders.updateOrderDetails);
+// app.get("/ordersDetailsSearch", orders.searchOrderDetailsPage)
+// app.post("/ordersDetailsSearch", orders.searchOrderDetails);
 
-// app.post('/add', createStudent);
-// app.post('/edit/:id', updateStudent);
+app.get("/paymentDetails", paymentDetails.paymentDetailsPage);
+
 
 app.listen(port, () => {
   console.log("Port Connected!");

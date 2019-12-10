@@ -1,9 +1,10 @@
 module.exports = {
   addOrderPage: (req, res) => {
-    res.render("addOrder.ejs", {
+    res.render("addOrder", {
       message: ""
     });
   },
+
 
   createOrder: (req, res) => {
     let orderID = req.body.orderID;
@@ -18,6 +19,9 @@ module.exports = {
     let politeness = req.body.politeness;
     let cust_satisfaction = req.body.cust_satisfaction;
     let total_rating = req.body.total_rating;
+    let supplier_email = req.body.supplier_email;
+    let resident_email = req.body.resident_email;
+    let resegroup_ID = req.body.resegroup_ID;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
 
@@ -29,27 +33,30 @@ module.exports = {
         });
       } else {
         if (results.length > 0) {
-          message = "OrderID already exists!";
-          // res.render('.ejs', {
-          //     message
-          // })
+          res.render('addOrder.ejs', {      
+            message : "OrderID already exists!"
+          })
           console.log("OderID already exists");
         } else {
+
           let queryAdd = `
-                    INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, timeliness, politeness, cust_satisfaction, total_rating) 
+                    INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, timeliness, politeness, cust_satisfaction, total_rating, supplier_email, resident_email, resegroup_ID) 
                     VALUES ( 
-                        orderID = ${orderID}, 
-                        order_date =  ${order_date}, 
-                        payment_type =  ${payment_type}, 
-                        status = ${status}, 
-                        cancelled_by = ${cancelled_by}, 
-                        cancel_date = ${cancel_date}, 
-                        cancel_reason = ${cancel_reason}, 
-                        location = ${location}, 
-                        timeliness = ${timeliness}, 
-                        politeness = ${politeness}, 
-                        cust_satisfaction = ${cust_satisfaction}, 
-                        total_rating = ${total_rating} 
+                        ${orderID}, 
+                        '${order_date}', 
+                        '${payment_type}', 
+                        '${status}', 
+                        '${cancelled_by}', 
+                        '${cancel_date}', 
+                        '${cancel_reason}', 
+                        '${location}', 
+                        ${timeliness}, 
+                        ${politeness}, 
+                        ${cust_satisfaction}, 
+                        ${total_rating},
+                        '${supplier_email}', 
+                        '${resident_email}', 
+                        ${resegroup_ID}
                     );`;
 
           db.query(
@@ -66,7 +73,10 @@ module.exports = {
               timeliness,
               politeness,
               cust_satisfaction,
-              total_rating
+              total_rating,
+              supplier_email,
+              resident_email,
+              resegroup_ID
             ],
             function(error, results, fields) {
               if (error) {
@@ -76,9 +86,9 @@ module.exports = {
                 });
               } else {
                 message = "Order successfully added!";
-                // res.render('.ejs', {
-                //     message
-                // })
+                res.render('addOrder', {
+                    message
+                })
                 console.log(message);
               }
             }
@@ -107,6 +117,9 @@ module.exports = {
     let politeness = req.body.politeness;
     let cust_satisfaction = req.body.cust_satisfaction;
     let total_rating = req.body.total_rating;
+    let supplier_email = req.body.supplier_email;
+    let resident_email = req.body.resident_email;
+    let resegroup_ID = req.body_resegroup_ID;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
 
@@ -137,7 +150,10 @@ module.exports = {
                         timeliness = ${timeliness}, 
                         politeness = ${politeness}, 
                         cust_satisfaction = ${cust_satisfaction}, 
-                        total_rating = ${total_rating} 
+                        total_rating = ${total_rating}, 
+                        supplier_email = ${supplier_email}, 
+                        resident_email = ${resident_email}, 
+                        resegroup_ID = ${resegroup_ID}
                     WHERE orderID = ${orderID};`;
 
           db.query(queryUpdate, function(error, results, fields) {
@@ -159,7 +175,7 @@ module.exports = {
     });
   },
 
-  updateOrderPage: (req, res) => {
+  searchOrderPage: (req, res) => {
     res.render("searchOrder.ejs", {
       message: ""
     });
