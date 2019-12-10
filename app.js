@@ -6,6 +6,7 @@ const app = express()
 const port = 8000
 
 const {home} = require('./routes/index')
+const orders = require('./routes/orders')
 
 
 const db = mysql.createConnection({
@@ -33,7 +34,10 @@ app.use(bodyParser.urlencoded({ extended : true }))
 app.use(bodyParser.json())
 
 app.get('/', home);
-// app.get('/signIn', signIn.signIn);
+
+app.get('/ordersAdd', orders.addOrderPage);
+app.post('/ordersAdd', orders.createOrder);
+
 // app.get('/add', studentRoute.addStudent);
 // app.post('/signIn', signIn.validation)
 // app.get('/edit/:id', updateStudentPage);
