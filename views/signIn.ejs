@@ -13,12 +13,33 @@
 </head>
 
 <body style="background-color: #2F2B32;">
-    <h1 class="text-center mainHeader" style="color: #A78F2E;font-size: 79px;font-family: Montserrat, sans-serif;margin-top: 0px;padding-top: 170px;margin-bottom: 28px;margin-left: -9px;">BAYANETWORK</h1>
-    <div class="form-group text-center" style="font-family: Roboto, sans-serif;font-size: 25px;"><input class="border rounded border-light" type="text" placeholder="Username" required=""></div>
-    <div class="form-group text-center" style="font-family: Roboto, sans-serif;font-size: 25px;"><input class="border rounded border-light" type="password" placeholder="Password" required=""></div><button class="btn btn-primary" type="button" style="margin-left: 617px;font-family: Roboto, sans-serif;background-color: #F95A37;font-size: 30px;margin-top: 35px;">Login</button>
-    <script
-        src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <h1 class="text-center mainHeader" style="color: #A78F2E; text-align: center; font-size: 79px;font-family: Montserrat, sans-serif;margin-top: 0px;padding-top: 170px;margin-bottom: 28px;margin-left: -9px;">BAYANETWORK</h1>
+    
+    <% if (message) { %>
+        <p style = " font-size: 50px; text-align: center; color: red"> <%= message %></p>
+    <% } %>
+        
+
+    <form method = "POST">
+
+        <div class="form-group text-center" style="font-family: Roboto, sans-serif;font-size: 25px; margin-top: 40px;">
+                <label style= "margin-left: 35%; color: white; font-size: 35px;">Username : </label> 
+                <input class="border rounded border-light" style = "font-size: 30px; border-radius: 6px;  margin-left: auto; margin-right: auto; margin-bottom: 20px;" type="text" name = "username" placeholder= " Village User" required="">
+            </div>
+            
+            <div class="form-group text-center" style="font-family: Roboto, sans-serif;font-size: 25px;">
+                    <label style= "margin-left: 35%; color: white; font-size: 35px;"> Password : </label> 
+                    <input class="border rounded border-light"  style = "font-size: 30px; border-radius: 6px;  margin-left: auto; margin-right: auto; margin-bottom: 20px;" type="password" name = "password" placeholder=" *******" required="">
+                </div>
+    
+            <button class="btn btn-primary" type="submit" value = "signIn" style="margin-left: 47%;font-family: Roboto, sans-serif;background-color: #F95A37;font-size: 30px;margin-top: 35px;">
+                    Login
+            </button>
+                    
+    </form>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
