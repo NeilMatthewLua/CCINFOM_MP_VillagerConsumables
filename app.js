@@ -1,42 +1,42 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const mysql = require('mysql')
+const express = require("express");
+const bodyParser = require("body-parser");
+const mysql = require("mysql");
 
-const app = express()
-const port = 8000
+const app = express();
+const port = 8000;
 
-const {home} = require('./routes/index')
-const orders = require('./routes/orders')
-
+const { home } = require("./routes/index");
+const orders = require("./routes/orders");
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'p@ssword',
-    database: 'villagebayanihan',
-    port: 3307
-})
+  host: "localhost",
+  user: "root",
+  password: "p@ssword",
+  database: "villagebayanihan",
+  port: 3307
+});
 
-db.connect(err =>{
-    if (err){
-        throw err;
-    }
-    console.log('DB Connected!')
-})
+db.connect(err => {
+  if (err) {
+    throw err;
+  }
+  console.log("DB Connected!");
+});
 
-global.db = db
+global.db = db;
 
-app.set('port', process.env.port || port)
-app.set('view engine', 'ejs')
-app.set('views', __dirname + '/views')
+app.set("port", process.env.port || port);
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
 
-app.use(bodyParser.urlencoded({ extended : true }))
-app.use(bodyParser.json())
+app.use(express.static(__dirname + "/views"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get('/', home);
+app.get("/", home);
 
-app.get('/ordersAdd', orders.addOrderPage);
-app.post('/ordersAdd', orders.createOrder);
+app.get("/ordersAdd", orders.addOrderPage);
+app.post("/ordersAdd", orders.createOrder);
 
 // app.get('/add', studentRoute.addStudent);
 // app.post('/signIn', signIn.validation)
@@ -46,7 +46,7 @@ app.post('/ordersAdd', orders.createOrder);
 // app.post('/add', createStudent);
 // app.post('/edit/:id', updateStudent);
 
-app.listen(port, () =>{
-    console.log('Port Connected!')
-    console.log(`Link: http://localhost:${port}`)
-})
+app.listen(port, () => {
+  console.log("Port Connected!");
+  console.log(`Link: http://localhost:${port}`);
+});

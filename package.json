@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables/issues"
   },
-  "homepage": "https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables#readme"
+  "homepage": "https://github.com/NeilMatthewLua/CCINFOM_MP_VillagerConsumables#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
 }
