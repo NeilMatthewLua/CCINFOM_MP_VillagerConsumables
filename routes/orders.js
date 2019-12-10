@@ -1,10 +1,10 @@
 module.exports = {
   addOrderPage: (req, res) => {
-    res.render("addOrder", {
-      message: ""
+    res.render("GL/addOrder", {
+      title: "Add Order",
+      message: "Add Order"
     });
   },
-
 
   createOrder: (req, res) => {
     let orderID = req.body.orderID;
@@ -33,12 +33,11 @@ module.exports = {
         });
       } else {
         if (results.length > 0) {
-          res.render('addOrder.ejs', {      
-            message : "OrderID already exists!"
-          })
+          res.render("addOrder.ejs", {
+            message: "OrderID already exists!"
+          });
           console.log("OderID already exists");
         } else {
-
           let queryAdd = `
                     INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, timeliness, politeness, cust_satisfaction, total_rating, supplier_email, resident_email, resegroup_ID) 
                     VALUES ( 
@@ -86,9 +85,9 @@ module.exports = {
                 });
               } else {
                 message = "Order successfully added!";
-                res.render('addOrder', {
-                    message
-                })
+                res.render("addOrder", {
+                  message
+                });
                 console.log(message);
               }
             }
@@ -176,7 +175,7 @@ module.exports = {
   },
 
   searchOrderPage: (req, res) => {
-    res.render("searchOrder.ejs", {
+    res.render("GL/searchOrder.ejs", {
       message: ""
     });
   },

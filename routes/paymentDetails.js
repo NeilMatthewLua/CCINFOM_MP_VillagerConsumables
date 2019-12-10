@@ -1,8 +1,8 @@
 module.exports = {
-
-    paymentDetailsPage: (req, res) => {
-        res.render("M2", {
-          message: ""
-        });
-    }
-}
+  addPDPage: (req, res) => {
+    res.render("M2/addPD", {
+      title: "Add Payment Detail",
+      message: "Add Payment Detail"
+    });
+  }
+};

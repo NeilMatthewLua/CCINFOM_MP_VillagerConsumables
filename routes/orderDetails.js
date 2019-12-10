@@ -1,8 +1,8 @@
 module.exports = {
-
-    orderDetailsPage: (req, res) => {
-        res.render("M1", {
-          message: ""
-        });
-    }
-}
+  addODPage: (req, res) => {
+    res.render("M1/addOD", {
+      title: "Add Order Detail",
+      message: "Add Order Detail"
+    });
+  }
+};
