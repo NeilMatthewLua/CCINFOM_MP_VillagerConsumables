@@ -14,8 +14,15 @@ const {
   searchOrder,
   searchOrderPage
 } = require("./routes/orders");
-const { addODPage } = require("./routes/orderDetails");
-const { addPDPage } = require("./routes/paymentDetails");
+const { 
+  addPDPage,
+  createPD
+} = require("./routes/paymentDetails");
+const { 
+  addODPage,
+  createOD
+} = require("./routes/orderDetails");
+
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -63,6 +70,8 @@ app.get("/M2/addPD", addPDPage);
 // app.get("/M2/reportPD", reportPDPage);
 
 app.post("/ordersAdd", createOrder);
+app.post("/M1/addOD", createOD);
+app.post("/M2/addPD", createPD);
 
 app.listen(port, () => {
   console.log("Port Connected!");

@@ -60,23 +60,6 @@ module.exports = {
 
           db.query(
             queryAdd,
-            [
-              orderID,
-              order_date,
-              payment_type,
-              status,
-              cancelled_by,
-              cancel_date,
-              cancel_reason,
-              location,
-              timeliness,
-              politeness,
-              cust_satisfaction,
-              total_rating,
-              supplier_email,
-              resident_email,
-              resegroup_ID
-            ],
             function(error, results, fields) {
               if (error) {
                 res.send({
@@ -85,8 +68,9 @@ module.exports = {
                 });
               } else {
                 message = "Order successfully added!";
-                res.render("addOrder", {
-                  message
+                res.render("GL/addOrder", {
+                  message,
+                  title: "Add Order"
                 });
                 console.log(message);
               }
