@@ -62,4 +62,139 @@ module.exports = {
       }
     });
   },
+
+  
+  updatePDPage: (req, res) => {
+    res.render("M2/updatePD", {
+      message: ""
+    });
+  },
+
+  updatePD: (req, res) => {
+    let orderID = req.body.orderID;
+    let payment_no = req.body.payment_no;
+    let payment_date = req.body.payment_date;
+    let payment_time = req.body.payment_time;
+    let penalty = req.body.penalty;
+    let amount_paid = req.body.amount_paid;
+
+    let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.send({
+          code: 400,
+          failed: "error ocurred"
+        });
+      } else {
+        if (results.length < 1) {
+          message = "OrderID does not exist!";
+          // res.render('.ejs', {
+          //     message
+          //     title: "Update Order Detail"
+          // })
+          console.log("OrderID does not exist!");
+        } else {
+          let queryUpdate = `
+                    UPDATE payment_details 
+                    SET payment_no =  ${payment_no}, 
+                        payment_date =  ${payment_date}, 
+                        payment_time = ${payment_time}, 
+                        penalty = ${penalty}, 
+                        amount_paid = ${amount_paid}, 
+                    WHERE orderID = ${orderID};`;
+
+          db.query(queryUpdate, function(error, results, fields) {
+            if (error) {
+              res.send({
+                code: 400,
+                failed: "an error ocurred"
+              });
+            } else {
+              message = "Order Detail successfully updated!";
+              // res.render('.ejs', {
+              //     message
+              //     title: Update Order
+              // })
+              console.log(message);
+            }
+          });
+        }
+      }
+    });
+  },
+
+  searchPD: (req, res) => {
+    res.render("M2/searchPD", {
+      message: ""
+    });
+  },
+
+  searchPD: (req, res) => {
+    let orderID = req.body.orderID;
+
+    let querySearch = `SELECT * FROM payment_details WHERE orderID = '${orderID}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.send({
+          code: 400,
+          failed: "error ocurred"
+        });
+      } else {
+        if (reults.length > 0) {
+          message = "";
+          // res.render('.ejs', {
+          //     message
+          //     results: results
+          // })
+          console.log(message);
+        } else {
+          message = "OrderID does not exist!";
+          // res.render('.ejs', {
+          //     message
+          //     results: results
+          // })
+          console.log("OrderID does not exist!");
+        }
+      }
+    });
+  },
+
+  deletePD: (req, res) => {
+    res.render("M2/deletePD", {
+      message: ""
+    });
+  },
+  
+  deletePD: (req, res) => {
+    let orderID = req.body.orderID;
+
+    let querySearch = `DELETE FROM payment_details WHERE orderID = '${orderID}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.send({
+          code: 400,
+          failed: "error ocurred"
+        });
+      } else {
+        if (reults.length > 0) {
+          message = "Payment Detail successfully deleted!";
+          // res.render('.ejs', {
+          //     message
+          //     results: results
+          // })
+          console.log(message);
+        } else {
+          message = "OrderID does not exist!";
+          // res.render('.ejs', {
+          //     message
+          //     results: results
+          // })
+          console.log("OrderID does not exist!");
+        }
+      }
+    });
+  }
 };

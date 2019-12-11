@@ -27,10 +27,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
-        });
+          res.render("GL/addOrder", {
+            message: "Invalid Input. Please double check."
+          })
       } else {
         if (results.length > 0) {
           res.render("addOrder.ejs", {
@@ -62,17 +61,16 @@ module.exports = {
             queryAdd,
             function(error, results, fields) {
               if (error) {
-                res.send({
-                  code: 400,
-                  failed: "error ocurred"
-                });
+                res.render("GL/addOrder", {
+                  message: "Invalid Input. Please double check your input.",
+                  title: "Add Order"
+                })
               } else {
                 message = "Order successfully added!";
                 res.render("GL/addOrder", {
                   message,
                   title: "Add Order"
                 });
-                console.log(message);
               }
             }
           );
@@ -82,7 +80,7 @@ module.exports = {
   },
 
   updateOrderPage: (req, res) => {
-    res.render("updateOrder.ejs", {
+    res.render("GL/updateOrder", {
       message: ""
     });
   },
@@ -102,28 +100,27 @@ module.exports = {
     let total_rating = req.body.total_rating;
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
-    let resegroup_ID = req.body_resegroup_ID;
+    let resegroup_ID = req.body.resegroup_ID;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
-        });
+          res.render("GL/updateOrder", {
+            message: "Invalid Input. Please double check."
+          })
       } else {
         if (results.length < 1) {
           message = "OrderID does not exist!";
           // res.render('.ejs', {
           //     message
+          //     title: "Update Order"
           // })
           console.log("OrderID does not exist!");
         } else {
           let queryUpdate = `
                     UPDATE orders 
-                    SET orderID = ${orderID}, 
-                        order_date =  ${order_date}, 
+                    SET order_date =  ${order_date}, 
                         payment_type =  ${payment_type}, 
                         status = ${status}, 
                         cancelled_by = ${cancelled_by}, 
@@ -149,6 +146,7 @@ module.exports = {
               message = "Order successfully updated!";
               // res.render('.ejs', {
               //     message
+              //     title: Update Order
               // })
               console.log(message);
             }
@@ -171,21 +169,22 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
-        });
+          res.render("GL/searchOrder", {
+            message: "Invalid Input. Please double check."
+          })
       } else {
         if (reults.length > 0) {
           message = "Cool";
           // res.render('.ejs',{
           //     message
+          //      results: resutls
           // })
           console.log(message);
         } else {
           message = "OrderID does not exist!";
-          // res.render('.ejs', {
+          // res.render('.ejs',{
           //     message
+          //      results: resutls
           // })
           console.log("OrderID does not exist!");
         }
