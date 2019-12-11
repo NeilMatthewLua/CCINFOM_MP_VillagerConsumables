@@ -1,12 +1,12 @@
 module.exports = {
-  addODPage: (req, res) => {
-    res.render("M1/addOD", {
+  addResPage: (req, res) => {
+    res.render("M1/addRes", {
       title: "Add Order Detail",
       message: "Add Order Detail"
     });
   },
 
-  createOD: (req, res) => {
+  createRes: (req, res) => {
     let orderID = req.body.orderID;
     let quantity_ordered = req.body.quantity_ordered;
     let price_each = req.body.price_each;
@@ -61,13 +61,13 @@ module.exports = {
     });
   },
 
-  updateODPage: (req, res) => {
-    res.render("M1/updateOD", {
+  updateResPage: (req, res) => {
+    res.render("M1/updateRes", {
       message: ""
     });
   },
 
-  updateOrder: (req, res) => {
+  updateRes: (req, res) => {
     let orderID = req.body.orderID;
     let quantity_ordered = req.body.quantity_ordered;
     let price_each = req.body.price_each;
@@ -119,13 +119,13 @@ module.exports = {
     });
   },
 
-  searchOD: (req, res) => {
-    res.render("M1/searchOD", {
+  searchRes: (req, res) => {
+    res.render("M1/searchRes", {
       message: ""
     });
   },
 
-  searchPD: (req, res) => {
+  searchRes: (req, res) => {
     let orderID = req.body.orderID;
 
     let querySearch = `SELECT * FROM order_details WHERE orderID = '${orderID}'`;
@@ -156,13 +156,13 @@ module.exports = {
     });
   },
 
-  deleteOD: (req, res) => {
-    res.render("M1/deleteOD", {
+  deleteRes: (req, res) => {
+    res.render("M1/deleteRes", {
       message: ""
     });
   },
   
-  deleteOD: (req, res) => {
+  deleteRes: (req, res) => {
     let orderID = req.body.orderID;
 
     let querySearch = `DELETE FROM order_details WHERE orderID = '${orderID}'`;
