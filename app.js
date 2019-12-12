@@ -11,11 +11,12 @@ const {
   createOrder,
   updateOrder,
   updateOrderPage,
+  updateOrderResult,
   searchOrder,
   searchOrderPage
 } = require("./routes/orders");
-const { addResPage, createRes } = require("./routes/residents");
-const { addPDPage, createPD } = require("./routes/paymentDetails");
+const { addPDPage, createPD,searchPD,searchPDPage } = require("./routes/paymentDetails");
+const { addRes, createRes,searchResPage,searchRes } = require("./routes/residents");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -50,23 +51,26 @@ app.get("/ordersUpdate", updateOrderPage);
 // app.get("/ordersReport", searchOrderPage);
 app.post("/ordersAdd", createOrder);
 app.post("/ordersSearch", searchOrder);
-app.post("/ordersUpdate", updateOrder);
+app.post("/ordersUpdate", updateOrderResult);
+app.post("/ordersUpdate/resultUpdate", updateOrder);
 
 app.get("/M1", M1);
-app.get("/M1/addRes", addResPage);
+app.get("/M1/addRes", createRes);
 // app.get("/M1/updateOD", updateODPage);
-// app.get("/M1/searchOD", searchODPage);
+app.get("/M1/searchRes", searchResPage);
 // app.get("/M1/deleteOD", deleteODPage);
 // app.get("/M1/reportOD", reportODPage);
 app.post("/M1/addRes", createRes);
+app.post("/M1/searchRes", searchRes);
 
 app.get("/M2", M2);
 app.get("/M2/addPD", addPDPage);
 // app.get("/M2/updatePD", updatePDPage);
-// app.get("/M2/searchPD", searchPDPage);
+app.get("/M2/searchPD", searchPDPage);
 // app.get("/M2/deletePD", deletePDPage);
 // app.get("/M2/reportPD", reportPDPage);
 app.post("/M2/addPD", createPD);
+app.post("/M2/searchPD", searchPD);
 
 app.listen(port, () => {
   console.log("Port Connected!");

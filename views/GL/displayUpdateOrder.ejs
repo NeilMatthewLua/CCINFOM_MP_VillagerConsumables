@@ -54,53 +54,50 @@
               class="form-control"
               name="orderID"
               id="orderID"
-              placeholder="-"
+              placeholder="Order ID"
               value="<%= order.orderID %>"
               readonly
             />
           </div>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlInput1">Order Date</label>
+          <label for="exampleFormControlInput1">Order Date (YYYY-MM-DD)</label>
           <div class="form-group col-md-4">
             <input
               type="text"
               class="form-control"
               name="order_date"
               id="order_date"
-              placeholder="-"
+              placeholder="Order Date (YYYY-MM-DD)"
               value="<%= order.order_date %>"
-              readonly
             />
           </div>
         </div>
 
-        <div class="form-group" method="POST">
-          <label for="exampleFormControlInput1">Payment Type</label>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Payment Type (P/D)</label>
           <div class="form-group col-md-4">
             <input
               type="text"
               class="form-control"
               name="payment_type"
               id="payment_type"
-              placeholder="-"
+              placeholder="Payment Type (P/D)"
               value="<%= order.payment_type %>"
-              readonly
             />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="exampleFormControlInput1">Status</label>
+          <label for="exampleFormControlInput1">Status (P/D/C)</label>
           <div class="form-group col-md-4">
             <input
               type="text"
               class="form-control"
               name="status"
               id="status"
-              placeholder="-"
+              placeholder="Status (P/D/C)"
               value="<%= order.status %>"
-              readonly
             />
           </div>
         </div>
@@ -113,24 +110,22 @@
               class="form-control"
               name="cancelled_by"
               id="cancelled_by"
-              placeholder="-"
+              placeholder="Cancelled By (U/S)"
               value="<%= order.cancelled_by %>"
-              readonly
             />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="exampleFormControlInput1">Cancel Date</label>
+          <label for="exampleFormControlInput1">Cancel Date (YYYY-MM-DD)</label>
           <div class="form-group col-md-4">
             <input
               type="text"
               class="form-control"
               name="cancel_date"
               id="cancel_date"
-              placeholder="-"
+              placeholder="Cancel Date (YYYY-MM-DD)"
               value="<%= order.cancel_date %>"
-              readonly
             />
           </div>
         </div>
@@ -143,9 +138,8 @@
               class="form-control"
               name="cancel_reason"
               id="cancel_reason"
-              placeholder="-"
+              placeholder="Cancel Reason"
               value="<%= order.cancel_reason %>"
-              readonly
             />
           </div>
         </div>
@@ -158,9 +152,8 @@
               class="form-control"
               name="location"
               id="location"
-              placeholder="-"
+              placeholder="Location"
               value="<%= order.location %>"
-              readonly
             />
           </div>
         </div>
@@ -175,9 +168,8 @@
               class="form-control"
               name="timeliness"
               id="timeliness"
-              placeholder="-"
+              placeholder="Timeliness (1-5)"
               value="<%= order.timeliness %>"
-              readonly
             />
           </div>
         </div>
@@ -192,9 +184,8 @@
               class="form-control"
               name="politeness"
               id="politeness"
-              placeholder="-"
+              placeholder="Politeness (1-5)"
               value="<%= order.politeness %>"
-              readonly
             />
           </div>
         </div>
@@ -209,9 +200,8 @@
               class="form-control"
               name="cust_satisfaction"
               id="cust_satisfaction"
-              placeholder="-"
+              placeholder="Customer Satisfaction (1-5)"
               value="<%= order.cust_satisfaction %>"
-              readonly
             />
           </div>
         </div>
@@ -226,9 +216,7 @@
               class="form-control"
               name="total_rating"
               id="total_rating"
-              placeholder="-"
               value="<%= order.total_rating %>"
-              readonly
             />
           </div>
         </div>
@@ -241,7 +229,6 @@
               class="form-control"
               name="supplier_email"
               id="supplier_email"
-              placeholder="-"
               value="<%= order.supplier_email %>"
               readonly
             />
@@ -256,7 +243,6 @@
               class="form-control"
               name="resident_email"
               id="resident_email"
-              placeholder="-"
               value="<%= order.resident_email %>"
               readonly
             />
@@ -271,12 +257,14 @@
               class="form-control"
               name="resegroup_ID"
               id="resegroup_ID"
-              placeholder="-"
               value="<%= order.resegroup_ID %>"
               readonly
             />
           </div>
         </div>
+        <button type="submit" class="btn btn-success float-right">
+          Update Order
+        </button>
       </form>
       <% } else { %>
       <p class="text-center">

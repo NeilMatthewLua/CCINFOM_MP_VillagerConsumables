@@ -11,7 +11,7 @@ module.exports = {
     let payment_no = req.body.payment_no;
     let payment_date = req.body.payment_date;
     let payment_time = req.body.payment_time;
-    let penalty = req.body.penalty == '' ? 0 : req.body.penalty;
+    let penalty = req.body.penalty == "" ? 0 : req.body.penalty;
     let amount_paid = req.body.amount_paid;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
@@ -35,35 +35,30 @@ module.exports = {
                         ${amount_paid}
                     );`;
 
-          db.query(
-            queryAdd,
-            function(error, results, fields) {
-              if (error) {
-                res.send({
-                  code: 400,
-                  failed: "error ocurred"
-                });
-              } else {
-                message = "Payment Detail successfully added!";
-                res.render("M2/addPD", {
-                  message,
-                  title: "Add Payment Detail"
-                });
-                console.log(message);
-              }
-            }
-          );
-        } else {
+          db.query(queryAdd, function(error, results, fields) {
+            if (error) {
+              res.send({
+                code: 400,
+                failed: "error ocurred"
+              });
+            } else {
+              message = "Payment Detail successfully added!";
               res.render("M2/addPD", {
-                message: "OrderID does not exist!",
+                message,
                 title: "Add Payment Detail"
               });
+              console.log(message);
+            }
+          });
+        } else {
+          res.render("M2/addPD", {
+            message: "OrderID does not exist!",
+            title: "Add Payment Detail"
+          });
         }
       }
     });
   },
-
-  
   updatePDPage: (req, res) => {
     res.render("M2/updatePD", {
       message: ""
@@ -124,16 +119,17 @@ module.exports = {
     });
   },
 
-  searchPD: (req, res) => {
+  searchPDPage: (req, res) => {
     res.render("M2/searchPD", {
-      message: ""
+      message: "Search Payment Detail",
+      title: "Search Payment Detail"
     });
   },
 
   searchPD: (req, res) => {
-    let orderID = req.body.orderID;
+    let payment_no = req.body.payment_no;
 
-    let querySearch = `SELECT * FROM payment_details WHERE orderID = '${orderID}'`;
+    let querySearch = `SELECT * FROM payment_details WHERE payment_no = '${payment_no}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -142,31 +138,32 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if (reults.length > 0) {
-          message = "";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log(message);
+        if (results.length > 0) {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M2/displayPD.ejs", {
+            title: "Payment Details",
+            message: "Search Payment Details",
+            found: true,
+            payment: json[0]
+          });
         } else {
-          message = "OrderID does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log("OrderID does not exist!");
+          res.render("M2/displayPD.ejs", {
+            title: "Payment Details",
+            message: "Payment Detail does not exist!",
+            found: false
+          });
         }
       }
     });
   },
 
-  deletePD: (req, res) => {
+  deletePDPage: (req, res) => {
     res.render("M2/deletePD", {
       message: ""
     });
   },
-  
+
   deletePD: (req, res) => {
     let orderID = req.body.orderID;
 
@@ -179,7 +176,7 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if (reults.length > 0) {
+        if (results.length > 0) {
           message = "Payment Detail successfully deleted!";
           // res.render('.ejs', {
           //     message

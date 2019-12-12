@@ -12,7 +12,6 @@ module.exports = {
     let user_email = req.body.user_email;
     let householdID = req.body.householdID;
 
-
     let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
 
     db.query(querySearch, function(error, results, fields) {
@@ -32,28 +31,25 @@ module.exports = {
                         ${householdID} 
                     );`;
 
-          db.query(
-            queryAdd,
-            function(error, results, fields) {
-              if (error) {
-                res.send({
-                  code: 400,
-                  failed: "error ocurred"
-                });
-              } else {
-                message = "Resident successfully added!";
-                res.render("M1/addRes", {
-                  message,
-                  title: "Add Resident"
-                });
-              }
-            }
-          );
-        } else {
+          db.query(queryAdd, function(error, results, fields) {
+            if (error) {
+              res.send({
+                code: 400,
+                failed: "error ocurred"
+              });
+            } else {
+              message = "Resident successfully added!";
               res.render("M1/addRes", {
-                message: "Resident email already exists!",
+                message,
                 title: "Add Resident"
               });
+            }
+          });
+        } else {
+          res.render("M1/addRes", {
+            message: "Resident email already exists!",
+            title: "Add Resident"
+          });
         }
       }
     });
@@ -70,7 +66,6 @@ module.exports = {
     let application_status = req.body.application_status;
     let user_email = req.body.user_email;
     let householdID = req.body.householdID;
-
 
     let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
 
@@ -116,9 +111,10 @@ module.exports = {
     });
   },
 
-  searchRes: (req, res) => {
+  searchResPage: (req, res) => {
     res.render("M1/searchRes", {
-      message: ""
+      title: "Search Resident",
+      message: "Search Resident"
     });
   },
 
@@ -134,20 +130,21 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if (reults.length > 0) {
-          message = "";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log(message);
+        if (results.length > 0) {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M1/displayRes.ejs", {
+            title: "Search Resident",
+            message: "Search Resident",
+            found: true,
+            resident: json[0]
+          });
         } else {
-          message = "resident_email does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log("resident_email does not exist!");
+          res.render("M1/displayRes.ejs", {
+            title: "Search Resident",
+            message: "Resident Email not found.",
+            found: false
+          });
         }
       }
     });
@@ -158,7 +155,7 @@ module.exports = {
       message: ""
     });
   },
-  
+
   deleteRes: (req, res) => {
     let resident_email = req.body.resident_email;
 
