@@ -27,15 +27,16 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-          res.render("GL/addOrder", {
-            message: "Invalid Input. Please double check."
-          })
+        res.render("GL/addOrder", {
+          title: "Add Order",
+          message: "Invalid Input. Please double check."
+        });
       } else {
         if (results.length > 0) {
-          res.render("addOrder.ejs", {
+          res.render("GL/addOrder.ejs", {
+            title: "Add Order",
             message: "OrderID already exists!"
           });
-          console.log("OderID already exists");
         } else {
           let queryAdd = `
                     INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, timeliness, politeness, cust_satisfaction, total_rating, supplier_email, resident_email, resegroup_ID) 
@@ -57,31 +58,29 @@ module.exports = {
                         ${resegroup_ID}
                     );`;
 
-          db.query(
-            queryAdd,
-            function(error, results, fields) {
-              if (error) {
-                res.render("GL/addOrder", {
-                  message: "Invalid Input. Please double check your input.",
-                  title: "Add Order"
-                })
-              } else {
-                message = "Order successfully added!";
-                res.render("GL/addOrder", {
-                  message,
-                  title: "Add Order"
-                });
-              }
+          db.query(queryAdd, function(error, results, fields) {
+            if (error) {
+              res.render("GL/addOrder", {
+                message: "Invalid Input. Please double check your input.",
+                title: "Add Order"
+              });
+            } else {
+              res.render("GL/addOrder", {
+                message: "Order successfully Added!",
+                title: "Add Order"
+              });
+              console.log(message);
             }
-          );
+          });
         }
       }
     });
   },
 
   updateOrderPage: (req, res) => {
-    res.render("GL/updateOrder", {
-      message: ""
+    res.render("searchOrder.ejs", {
+      message: "Update Order",
+      title: "Update Order"
     });
   },
 
@@ -100,23 +99,22 @@ module.exports = {
     let total_rating = req.body.total_rating;
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
-    let resegroup_ID = req.body.resegroup_ID;
+    let resegroup_ID = req.body_resegroup_ID;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-          res.render("GL/updateOrder", {
-            message: "Invalid Input. Please double check."
-          })
+        res.render("GL/searchOrder", {
+          title: "Update Order",
+          message: "Invalid Input. Please double check."
+        });
       } else {
         if (results.length < 1) {
-          message = "OrderID does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     title: "Update Order"
-          // })
-          console.log("OrderID does not exist!");
+          res.render("GL/searchOrder.ejs", {
+            title: "Update Order",
+            message: "OrderID does not exist!"
+          });
         } else {
           let queryUpdate = `
                     UPDATE orders 
@@ -138,16 +136,15 @@ module.exports = {
 
           db.query(queryUpdate, function(error, results, fields) {
             if (error) {
-              res.send({
-                code: 400,
-                failed: "error ocurred"
+              res.render("GL/searchOrder", {
+                title: "Update Order",
+                message: "Invalid Input. Please double check."
               });
             } else {
-              message = "Order successfully updated!";
-              // res.render('.ejs', {
-              //     message
-              //     title: Update Order
-              // })
+              res.render("GL/searchOrder", {
+                title: "Update Order",
+                message: "Order successfully updated!"
+              });
               console.log(message);
             }
           });
@@ -158,7 +155,8 @@ module.exports = {
 
   searchOrderPage: (req, res) => {
     res.render("GL/searchOrder.ejs", {
-      message: ""
+      title: "Search Order",
+      message: "Search Order"
     });
   },
 
@@ -169,24 +167,29 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-          res.render("GL/searchOrder", {
-            message: "Invalid Input. Please double check."
-          })
+        res.render("GL/searchOrder.ejs", {
+          title: "Search Order",
+          message: "Invalid Input. Please double check."
+        });
       } else {
-        if (reults.length > 0) {
-          message = "Cool";
-          // res.render('.ejs',{
-          //     message
-          //      results: resutls
-          // })
-          console.log(message);
+        if (results.length > 0) {
+          //Perform parsing to be able to access json
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("GL/displayOrder.ejs", {
+            title: "Search Order",
+            message: "Search Order",
+            order: json[0],
+            update: false,
+            found: true
+          });
         } else {
-          message = "OrderID does not exist!";
-          // res.render('.ejs',{
-          //     message
-          //      results: resutls
-          // })
-          console.log("OrderID does not exist!");
+          res.render("GL/displayOrder.ejs", {
+            title: "Search Order",
+            message: "OrderID does not exist!",
+            update: false,
+            found: false
+          });
         }
       }
     });

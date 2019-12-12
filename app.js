@@ -14,16 +14,8 @@ const {
   searchOrder,
   searchOrderPage
 } = require("./routes/orders");
-
-const { 
-  addPDPage,
-  createPD
-} = require("./routes/paymentDetails");
-
-const { 
-  addResPage,
-  createRes
-} = require("./routes/residents");
+const { addResPage, createRes } = require("./routes/residents");
+const { addODPage, createOD } = require("./routes/orderDetails");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -54,8 +46,11 @@ app.use(bodyParser.json());
 app.get("/", home);
 app.get("/ordersAdd", addOrderPage);
 app.get("/ordersSearch", searchOrderPage);
-// app.get("/ordersUpdate", updateOrderPage);
-// app.get("/ordersReport", reportOrderPage);
+app.get("/ordersUpdate", updateOrderPage);
+// app.get("/ordersReport", searchOrderPage);
+app.post("/ordersAdd", createOrder);
+app.post("/ordersSearch", searchOrder);
+app.post("/ordersUpdate", updateOrder);
 
 app.get("/M1", M1);
 app.get("/M1/addRes", addResPage);
@@ -63,6 +58,7 @@ app.get("/M1/addRes", addResPage);
 // app.get("/M1/searchOD", searchODPage);
 // app.get("/M1/deleteOD", deleteODPage);
 // app.get("/M1/reportOD", reportODPage);
+app.post("/M1/addRes", createOD);
 
 app.get("/M2", M2);
 app.get("/M2/addPD", addPDPage);
@@ -70,9 +66,6 @@ app.get("/M2/addPD", addPDPage);
 // app.get("/M2/searchPD", searchPDPage);
 // app.get("/M2/deletePD", deletePDPage);
 // app.get("/M2/reportPD", reportPDPage);
-
-app.post("/ordersAdd", createOrder);
-app.post("/M1/addRes", createRes);
 app.post("/M2/addPD", createPD);
 
 app.listen(port, () => {
