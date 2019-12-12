@@ -15,7 +15,7 @@ const {
   searchOrderPage
 } = require("./routes/orders");
 const { addResPage, createRes } = require("./routes/residents");
-const { addODPage, createOD } = require("./routes/orderDetails");
+const { addPDPage, createPD } = require("./routes/paymentDetails");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -58,7 +58,7 @@ app.get("/M1/addRes", addResPage);
 // app.get("/M1/searchOD", searchODPage);
 // app.get("/M1/deleteOD", deleteODPage);
 // app.get("/M1/reportOD", reportODPage);
-app.post("/M1/addRes", createOD);
+app.post("/M1/addRes", createRes);
 
 app.get("/M2", M2);
 app.get("/M2/addPD", addPDPage);

@@ -11,17 +11,18 @@ module.exports = {
     let order_date = req.body.order_date;
     let payment_type = req.body.payment_type;
     let status = req.body.status;
-    let cancelled_by = req.body.cancelled_by;
-    let cancel_date = req.body.cancel_date;
-    let cancel_reason = req.body.cancel_reason;
+    let cancelled_by = req.body.cancelled_by == '' ? 'NULL' : "'" + req.body.cancelled_by + "'";
+    let cancel_date = req.body.cancel_date == '' ? 'NULL' : "'" + req.body.cancel_date + "'";
+    let cancel_reason = req.body.cancel_reason == '' ? 'NULL' : "'" + req.body.cancel_reason + "'";
     let location = req.body.location;
+    let remark = req.body.remark == '' ? 'NULL' : "'" + req.body.remark + "'";
     let timeliness = req.body.timeliness;
     let politeness = req.body.politeness;
     let cust_satisfaction = req.body.cust_satisfaction;
     let total_rating = req.body.total_rating;
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
-    let resegroup_ID = req.body.resegroup_ID;
+    let resegroup_ID = req.body.resegroup_ID == '' ? 'NULL' : req.body.resegroup_ID;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
 
@@ -39,16 +40,17 @@ module.exports = {
           });
         } else {
           let queryAdd = `
-                    INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, timeliness, politeness, cust_satisfaction, total_rating, supplier_email, resident_email, resegroup_ID) 
+                    INSERT INTO orders (orderID, order_date, payment_type, status, cancelled_by, cancel_date, cancel_reason, location, remark,timeliness, politeness, cust_satisfaction, total_rating, supplier_email, resident_email, resegroup_ID) 
                     VALUES ( 
                         ${orderID}, 
                         '${order_date}', 
                         '${payment_type}', 
                         '${status}', 
-                        '${cancelled_by}', 
-                        '${cancel_date}', 
-                        '${cancel_reason}', 
-                        '${location}', 
+                        ${cancelled_by}, 
+                        ${cancel_date}, 
+                        ${cancel_reason}, 
+                        '${location}',
+                        ${remark}, 
                         ${timeliness}, 
                         ${politeness}, 
                         ${cust_satisfaction}, 
@@ -69,7 +71,6 @@ module.exports = {
                 message: "Order successfully Added!",
                 title: "Add Order"
               });
-              console.log(message);
             }
           });
         }
@@ -125,6 +126,7 @@ module.exports = {
                         cancel_date = ${cancel_date}, 
                         cancel_reason = ${cancel_reason}, 
                         location = ${location}, 
+                        remark = ${remark}, 
                         timeliness = ${timeliness}, 
                         politeness = ${politeness}, 
                         cust_satisfaction = ${cust_satisfaction}, 
@@ -174,6 +176,7 @@ module.exports = {
       } else {
         if (results.length > 0) {
           //Perform parsing to be able to access json
+
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
           res.render("GL/displayOrder.ejs", {

@@ -1,19 +1,19 @@
 module.exports = {
   addResPage: (req, res) => {
     res.render("M1/addRes", {
-      title: "Add Order Detail",
-      message: "Add Order Detail"
+      title: "Add Resident",
+      message: "Add Resident"
     });
   },
 
   createRes: (req, res) => {
-    let orderID = req.body.orderID;
-    let quantity_ordered = req.body.quantity_ordered;
-    let price_each = req.body.price_each;
-    let product_quality = req.body.product_quality;
-    let prodID = req.body.prodID;
+    let resident_email = req.body.resident_email;
+    let application_status = req.body.application_status;
+    let user_email = req.body.user_email;
+    let householdID = req.body.householdID;
 
-    let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
+
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -22,15 +22,14 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if (results.length > 0) {
+        if (results.length < 1) {
           let queryAdd = `
-                    INSERT INTO order_details (orderID, quantity_ordered, price_each, product_quality, prodID) 
+                    INSERT INTO residents (resident_email, application_status, user_email, householdID) 
                     VALUES ( 
-                        ${orderID}, 
-                        ${quantity_ordered}, 
-                        ${price_each}, 
-                        ${product_quality}, 
-                        ${prodID}
+                        '${resident_email}', 
+                        '${application_status}', 
+                        '${user_email}', 
+                        ${householdID} 
                     );`;
 
           db.query(
@@ -42,19 +41,18 @@ module.exports = {
                   failed: "error ocurred"
                 });
               } else {
-                message = "Order Detail successfully added!";
-                res.render("M1/addOD", {
+                message = "Resident successfully added!";
+                res.render("M1/addRes", {
                   message,
-                  title: "Add Order Detail"
+                  title: "Add Resident"
                 });
-                console.log(message);
               }
             }
           );
         } else {
-              res.render("M1/addOD", {
-                message: "OrderID does not exist!",
-                title: "Add Order Detail"
+              res.render("M1/addRes", {
+                message: "Resident email already exists!",
+                title: "Add Resident"
               });
         }
       }
@@ -68,13 +66,13 @@ module.exports = {
   },
 
   updateRes: (req, res) => {
-    let orderID = req.body.orderID;
-    let quantity_ordered = req.body.quantity_ordered;
-    let price_each = req.body.price_each;
-    let product_quality = req.body.product_quality;
-    let prodID = req.body.prodID;
+    let resident_email = req.body.resident_email;
+    let application_status = req.body.application_status;
+    let user_email = req.body.user_email;
+    let householdID = req.body.householdID;
 
-    let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
+
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -84,20 +82,19 @@ module.exports = {
         });
       } else {
         if (results.length < 1) {
-          message = "OrderID does not exist!";
+          message = "resident_email does not exist!";
           // res.render('.ejs', {
           //     message
-          //     title: "Update Order Detail"
+          //     title: "Update Resident Detail"
           // })
-          console.log("OrderID does not exist!");
+          console.log("resident_email does not exist!");
         } else {
           let queryUpdate = `
-                    UPDATE order_details 
-                    SET quantity_ordered =  ${quantity_ordered}, 
-                        price_each =  ${price_each}, 
-                        product_quality = ${product_quality}, 
-                        prodID = ${prodID}, 
-                    WHERE orderID = ${orderID};`;
+                    UPDATE residents 
+                    SET application_status =  '${application_status}', 
+                    user_email =  '${user_email}', 
+                    householdID = ${householdID} 
+                    WHERE resident_email = '${resident_email}';`;
 
           db.query(queryUpdate, function(error, results, fields) {
             if (error) {
@@ -106,7 +103,7 @@ module.exports = {
                 failed: "an error ocurred"
               });
             } else {
-              message = "Order Detail successfully updated!";
+              message = "Resident successfully updated!";
               // res.render('.ejs', {
               //     message
               //     title: Update Order
@@ -126,9 +123,9 @@ module.exports = {
   },
 
   searchRes: (req, res) => {
-    let orderID = req.body.orderID;
+    let resident_email = req.body.resident_email;
 
-    let querySearch = `SELECT * FROM order_details WHERE orderID = '${orderID}'`;
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -145,12 +142,12 @@ module.exports = {
           // })
           console.log(message);
         } else {
-          message = "OrderID does not exist!";
+          message = "resident_email does not exist!";
           // res.render('.ejs', {
           //     message
           //     results: results
           // })
-          console.log("OrderID does not exist!");
+          console.log("resident_email does not exist!");
         }
       }
     });
@@ -163,9 +160,9 @@ module.exports = {
   },
   
   deleteRes: (req, res) => {
-    let orderID = req.body.orderID;
+    let resident_email = req.body.resident_email;
 
-    let querySearch = `DELETE FROM order_details WHERE orderID = '${orderID}'`;
+    let querySearch = `DELETE FROM residents WHERE resident_email = '${resident_email}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -175,19 +172,19 @@ module.exports = {
         });
       } else {
         if (reults.length > 0) {
-          message = "Order Detail successfully deleted!";
+          message = "Resident successfully deleted!";
           // res.render('.ejs', {
           //     message
           //     results: results
           // })
           console.log(message);
         } else {
-          message = "OrderID does not exist!";
+          message = "resident_email does not exist!";
           // res.render('.ejs', {
           //     message
           //     results: results
           // })
-          console.log("OrderID does not exist!");
+          console.log("resident_email does not exist!");
         }
       }
     });

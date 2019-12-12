@@ -11,7 +11,7 @@ module.exports = {
     let payment_no = req.body.payment_no;
     let payment_date = req.body.payment_date;
     let payment_time = req.body.payment_time;
-    let penalty = req.body.penalty;
+    let penalty = req.body.penalty == '' ? 0 : req.body.penalty;
     let amount_paid = req.body.amount_paid;
 
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;

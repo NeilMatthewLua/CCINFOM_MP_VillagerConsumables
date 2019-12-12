@@ -44,15 +44,15 @@
       <% if (message) { %>
       <p class="text-center text-danger"><%= message %></p>
       <% } %>
-      <form class="add-player-form" action="/M1/addOD" method="post">
+      <form class="add-player-form" action="/M1/addRes" method="post">
         <div class="form-row">
           <div class="form-group col-md-4">
             <input
               type="text"
               class="form-control"
-              name="orderID"
-              id="orderID"
-              placeholder="Order ID"
+              name="resident_email"
+              id="resident_email"
+              placeholder="Resident Email"
               required
             />
           </div>
@@ -60,9 +60,9 @@
             <input
               type="text"
               class="form-control"
-              name="quantity_ordered"
-              id="quantity_ordered"
-              placeholder="Quantity Ordered"
+              name="application_status"
+              id="application_status"
+              placeholder="Application Status (A/P)"
               required
             />
           </div>
@@ -70,9 +70,9 @@
             <input
               type="text"
               class="form-control"
-              name="price_each"
-              id="price_each"
-              placeholder="Price Each"
+              name="user_email"
+              id="user_email"
+              placeholder="User Email"
               required
             />
           </div>
@@ -80,25 +80,15 @@
             <input
               type="text"
               class="form-control"
-              name="product_quality"
-              id="product_quality"
-              placeholder="Product Quality"
-              required
-            />
-          </div>
-          <div class="form-group col-md-4">
-            <input
-              type="text"
-              class="form-control"
-              name="prodID"
-              id="prodID"
-              placeholder="Product ID"
+              name="householdID"
+              id="householdID"
+              placeholder="Household ID"
               required
             />
           </div>
         </div>
         <button type="submit" class="btn btn-primary float-right">
-          Add Order Detail
+          Add Resident
         </button>
       </form>
     </div>
