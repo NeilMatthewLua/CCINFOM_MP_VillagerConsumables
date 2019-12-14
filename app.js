@@ -12,11 +12,30 @@ const {
   updateOrder,
   updateOrderPage,
   updateOrderResult,
+  updateOrderDetails,
   searchOrder,
   searchOrderPage
 } = require("./routes/orders");
-const { addPDPage, createPD,searchPD,searchPDPage } = require("./routes/paymentDetails");
-const { addRes, createRes,searchResPage,searchRes } = require("./routes/residents");
+const {
+  addPDPage,
+  createPD,
+  searchPD,
+  searchPDPage,
+  updatePDPage,
+  updatePDDetails,
+  updatePDResult,
+  updatePD
+} = require("./routes/paymentDetails");
+const {
+  addResPage,
+  createRes,
+  searchResPage,
+  searchRes,
+  updateResPage,
+  updateResDetails,
+  updateResResult,
+  updateRes
+} = require("./routes/residents");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -48,29 +67,38 @@ app.get("/", home);
 app.get("/ordersAdd", addOrderPage);
 app.get("/ordersSearch", searchOrderPage);
 app.get("/ordersUpdate", updateOrderPage);
+app.get("/ordersUpdate/:orderID", updateOrderDetails);
 // app.get("/ordersReport", searchOrderPage);
 app.post("/ordersAdd", createOrder);
 app.post("/ordersSearch", searchOrder);
 app.post("/ordersUpdate", updateOrderResult);
-app.post("/ordersUpdate/resultUpdate", updateOrder);
+app.post("/ordersUpdate/:orderID", updateOrder);
 
+//M1 Routes
 app.get("/M1", M1);
-app.get("/M1/addRes", createRes);
-// app.get("/M1/updateOD", updateODPage);
+app.get("/M1/addRes", addResPage);
 app.get("/M1/searchRes", searchResPage);
+app.get("/M1/updateRes", updateResPage);
+app.get("/M1/updateRes/:resID", updateResDetails);
 // app.get("/M1/deleteOD", deleteODPage);
 // app.get("/M1/reportOD", reportODPage);
 app.post("/M1/addRes", createRes);
 app.post("/M1/searchRes", searchRes);
+app.post("/M1/updateRes", updateResResult);
+app.post("/M1/updateRes/:resID", updateRes);
 
+//M2 Routes
 app.get("/M2", M2);
 app.get("/M2/addPD", addPDPage);
-// app.get("/M2/updatePD", updatePDPage);
+app.get("/M2/updatePD", updatePDPage);
+app.get("/M2/updatePD/:pdID", updatePDDetails);
 app.get("/M2/searchPD", searchPDPage);
 // app.get("/M2/deletePD", deletePDPage);
 // app.get("/M2/reportPD", reportPDPage);
 app.post("/M2/addPD", createPD);
 app.post("/M2/searchPD", searchPD);
+app.post("/M2/updatePD", updatePDResult);
+app.post("/M2/updatePD/:pdID", updatePD);
 
 app.listen(port, () => {
   console.log("Port Connected!");

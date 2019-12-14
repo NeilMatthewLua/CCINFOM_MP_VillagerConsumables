@@ -111,7 +111,8 @@ module.exports = {
         } else {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
-       
+          json[0].order_date = json[0].order_date.split("T")[0];
+          json[0].cancel_date = json[0].cancel_date.split("T")[0];
           res.render("GL/displayUpdateOrder.ejs", {
             title: "Update Order",
             message: "Update Order",
@@ -119,6 +120,30 @@ module.exports = {
             order: json[0]
           });
         }
+      }
+    });
+  },
+
+  updateOrderDetails: (req, res) => {
+    let orderID = req.query.orderID;
+    let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("GL/updateOrder", {
+          title: "Update Order",
+          message: "Invalid Input. Please double check."
+        });
+      } else {
+        var string = JSON.stringify(results);
+        var json = JSON.parse(string);
+        json[0].order_date = json[0].order_date.split("T")[0];
+        json[0].cancel_date = json[0].cancel_date.split("T")[0];
+        res.render("GL/displayUpdateConfirm.ejs", {
+          title: "Update Order",
+          message: "Update Order",
+          found: true,
+          order: json[0]
+        });
       }
     });
   },
@@ -139,42 +164,52 @@ module.exports = {
     let total_rating = req.body.total_rating;
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
-    let resegroup_ID = req.body_resegroup_ID;
+    let resegroup_ID = req.body.resegroup_ID;
 
     let queryUpdate = `
                     UPDATE orders 
-                    SET order_date =  ${order_date}, 
-                        payment_type =  ${payment_type}, 
-                        status = ${status}, 
-                        cancelled_by = ${cancelled_by}, 
-                        cancel_date = ${cancel_date}, 
-                        cancel_reason = ${cancel_reason}, 
-                        location = ${location}, 
-                        remark = ${remark},
-                        timeliness = ${timeliness}, 
-                        politeness = ${politeness}, 
-                        cust_satisfaction = ${cust_satisfaction}, 
-                        total_rating = ${total_rating}, 
-                        supplier_email = ${supplier_email}, 
-                        resident_email = ${resident_email}, 
-                        resegroup_ID = ${resegroup_ID}
+                    SET order_date =  '${order_date}', 
+                        payment_type =  '${payment_type}', 
+                        status = '${status}', 
+                        cancelled_by = '${cancelled_by}', 
+                        cancel_date = '${cancel_date}', 
+                        cancel_reason = '${cancel_reason}', 
+                        location = '${location}', 
+                        remark ='${remark}',
+                        timeliness = '${timeliness}', 
+                        politeness = '${politeness}', 
+                        cust_satisfaction = '${cust_satisfaction}', 
+                        total_rating = '${total_rating}', 
+                        supplier_email = '${supplier_email}', 
+                        resident_email = '${resident_email}', 
+                        resegroup_ID = '${resegroup_ID}'
                     WHERE orderID = ${orderID};`;
 
-    db.query(queryUpdate, function(error, results, fields) {
-      if (error) {
-        res.render("GL/updateOrder", {
-          title: "Update Order",
-          message: "Invalid Input. Please double check.",
-          found: true
-        });
-      } else {
-        res.render("GL/updateOrder", {
-          title: "Update Order",
-          message: "Order successfully updated!",
-          found: true
-        });
-        console.log(message);
-      }
+    db.query(queryUpdate, function(err, results, fields) {
+      let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
+      var json;
+      db.query(querySearch, function(error, results, fields) {
+        var string = JSON.stringify(results);
+        json = JSON.parse(string);
+        json[0].order_date = json[0].order_date.split("T")[0];
+        json[0].cancel_date = json[0].cancel_date.split("T")[0];
+        if (err) {
+          console.log(err);
+          res.render("GL/displayUpdateConfirm.ejs", {
+            title: "Update Order",
+            message: "Error in Updating. Please check input.",
+            found: true,
+            order: json[0]
+          });
+        } else {
+          res.render("GL/displayUpdateConfirm.ejs", {
+            title: "Update Order",
+            message: "Order updated successfully",
+            found: true,
+            order: json[0]
+          });
+        }
+      });
     });
   },
 
@@ -201,7 +236,8 @@ module.exports = {
           //Perform parsing to be able to access json
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
-          json[0].order_date = json[0].order_date.split('T')[0]
+          json[0].order_date = json[0].order_date.split("T")[0];
+          json[0].cancel_date = json[0].cancel_date.split("T")[0];
           res.render("GL/displayOrder.ejs", {
             title: "Search Order",
             message: "Search Order",

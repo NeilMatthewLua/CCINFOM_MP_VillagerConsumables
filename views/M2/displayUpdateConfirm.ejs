@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+      <div class="container">
+        <a class="navbar-brand" href="/" style="font-size: 36px;">BAYANETWORK</a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
+        >
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/" style="font-size: 36px;">GL</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="/M1" style="font-size: 36px;"
+                >M1</a
+              >
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/M2" style="font-size: 36px;">M2</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <% if (message) { %>
+      <p class="text-center text-danger"><%= message %></p>
+      <% } %> <% if (found) { %>
+      <form class="add-player-form" action="" method="post">
+          <div class="form-group">
+              <label for="exampleFormControlInput1">Payment Number</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="payment_no"
+                  id="payment_no"
+                  placeholder="-"
+                  value="<%= payment.payment_no %>"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Payment Date</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="payment_date"
+                  id="payment_date"
+                  placeholder="-"
+                  value="<%= payment.payment_date %>"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Payment Time</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="payment_time"
+                  id="payment_time"
+                  placeholder="-"
+                  value="<%= payment.payment_time %>"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Payment Time</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="amount_paid"
+                  id="amount_paid"
+                  placeholder="-"
+                  value="<%= payment.amount_paid %>"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Penalty</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="penalty"
+                  id="penalty"
+                  placeholder="-"
+                  value="<%= payment.penalty %>"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Order ID</label>
+              <div class="form-group col-md-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="orderID"
+                  id="orderID"
+                  placeholder="-"
+                  value="<%= payment.orderID %>"
+                  readonly
+                />
+              </div>
+        <button type="submit" class="btn btn-success float-right">
+          Update Payment Detail
+        </button>
+      </form>
+      <% } else { %>
+        <p class="text-center">
+            Payment Detail Not Found. Go <a href="/M2/addPD">here</a> to add payment
+            details.
+          </p>
+      <% } %>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

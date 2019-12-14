@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+      <div class="container">
+        <a class="navbar-brand" href="/" style="font-size: 36px;">BAYANETWORK</a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
+        >
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="/" style="font-size: 36px;"
+                >GL</a
+              >
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/M1" style="font-size: 36px;">M1</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/M2" style="font-size: 36px;">M2</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <% if (message) { %>
+      <p class="text-center text-danger"><%= message %></p>
+      <% } %> <% if (found) { %>
+      <form class="add-player-form" action="" method="post">
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Order ID</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="orderID"
+              id="orderID"
+              placeholder="Order ID"
+              value="<%= order.orderID %>"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Order Date (YYYY-MM-DD)</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="order_date"
+              id="order_date"
+              placeholder="Order Date (YYYY-MM-DD)"
+              value="<%= order.order_date %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Payment Type (P/D)</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="payment_type"
+              id="payment_type"
+              placeholder="Payment Type (P/D)"
+              value="<%= order.payment_type %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Status (P/D/C)</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="status"
+              id="status"
+              placeholder="Status (P/D/C)"
+              value="<%= order.status %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Cancelled By</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="cancelled_by"
+              id="cancelled_by"
+              placeholder="Cancelled By (U/S)"
+              value="<%= order.cancelled_by %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Cancel Date (YYYY-MM-DD)</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="cancel_date"
+              id="cancel_date"
+              placeholder="Cancel Date (YYYY-MM-DD)"
+              value="<%= order.cancel_date %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Cancel Reason</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="cancel_reason"
+              id="cancel_reason"
+              placeholder="Cancel Reason"
+              value="<%= order.cancel_reason %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Location</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="location"
+              id="location"
+              placeholder="Location"
+              value="<%= order.location %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Timeliness</label>
+          <div class="form-group col-md-4">
+            <input
+              type="number"
+              min="1"
+              max="5"
+              class="form-control"
+              name="timeliness"
+              id="timeliness"
+              placeholder="Timeliness (1-5)"
+              value="<%= order.timeliness %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Politeness</label>
+          <div class="form-group col-md-4">
+            <input
+              type="number"
+              min="1"
+              max="5"
+              class="form-control"
+              name="politeness"
+              id="politeness"
+              placeholder="Politeness (1-5)"
+              value="<%= order.politeness %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Customer Satisfaction</label>
+          <div class="form-group col-md-4">
+            <input
+              type="number"
+              min="1"
+              max="5"
+              class="form-control"
+              name="cust_satisfaction"
+              id="cust_satisfaction"
+              placeholder="Customer Satisfaction (1-5)"
+              value="<%= order.cust_satisfaction %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Total Rating</label>
+          <div class="form-group col-md-4">
+            <input
+              type="number"
+              min="1"
+              max="5"
+              class="form-control"
+              name="total_rating"
+              id="total_rating"
+              value="<%= order.total_rating %>"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Supplier Email</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="supplier_email"
+              id="supplier_email"
+              value="<%= order.supplier_email %>"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resident Email</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="resident_email"
+              id="resident_email"
+              value="<%= order.resident_email %>"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Resident Group ID</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="resegroup_ID"
+              id="resegroup_ID"
+              value="<%= order.resegroup_ID %>"
+              readonly
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success float-right">
+          Update Order
+        </button>
+      </form>
+      <% } else { %>
+      <p class="text-center">
+        Order Not Found. Go <a href="/ordersAdd">here</a> to add orders.
+      </p>
+      <% } %>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -59,63 +59,107 @@ module.exports = {
       }
     });
   },
+
   updatePDPage: (req, res) => {
-    res.render("M2/updatePD", {
-      message: ""
+    res.render("M2/updatePD.ejs", {
+      message: "Update Payment Details",
+      title: "Update Payment Details"
+    });
+  },
+
+  updatePDResult: (req, res) => {
+    let payment_no = req.body.payment_no;
+    let querySearch = `SELECT * FROM payment_details WHERE payment_no = ${payment_no}`;
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M2/updatePD", {
+          title: "Update Payment Details",
+          message: "Invalid Input. Please double check."
+        });
+      } else {
+        if (results.length < 1) {
+          res.render("M2/updatePD", {
+            title: "Update Payment Details",
+            message: "Payment No. does not exist!"
+          });
+        } else {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          json[0].payment_date = json[0].payment_date.split("T")[0];
+          res.render("M2/displayUpdatePD", {
+            title: "Update Payment Details",
+            message: "Update Payment Details",
+            found: true,
+            payment: json[0]
+          });
+        }
+      }
+    });
+  },
+
+  updatePDDetails: (req, res) => {
+    let payment_no = req.query.payment_no;
+    let querySearch = `SELECT * FROM payment_details WHERE payment_no = ${payment_no}`;
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M2/updatePD", {
+          title: "Update Payment Details",
+          message: "Invalid Input. Please double check."
+        });
+      } else {
+        var string = JSON.stringify(results);
+        var json = JSON.parse(string);
+        json[0].payment_date = json[0].payment_date.split("T")[0];
+        res.render("M2/displayUpdateConfirm", {
+          title: "Update Payment Details",
+          message: "Update Payment Details",
+          found: true,
+          payment: json[0]
+        });
+      }
     });
   },
 
   updatePD: (req, res) => {
-    let orderID = req.body.orderID;
     let payment_no = req.body.payment_no;
     let payment_date = req.body.payment_date;
     let payment_time = req.body.payment_time;
     let penalty = req.body.penalty;
     let amount_paid = req.body.amount_paid;
 
-    let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
-
-    db.query(querySearch, function(error, results, fields) {
-      if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
-        });
-      } else {
-        if (results.length < 1) {
-          message = "OrderID does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     title: "Update Order Detail"
-          // })
-          console.log("OrderID does not exist!");
-        } else {
-          let queryUpdate = `
+    let queryUpdate = `
                     UPDATE payment_details 
                     SET payment_no =  ${payment_no}, 
-                        payment_date =  ${payment_date}, 
-                        payment_time = ${payment_time}, 
+                        payment_date =  '${payment_date}', 
+                        payment_time = '${payment_time}', 
                         penalty = ${penalty}, 
-                        amount_paid = ${amount_paid}, 
-                    WHERE orderID = ${orderID};`;
+                        amount_paid = ${amount_paid} 
+                    WHERE payment_no = ${payment_no};`;
 
-          db.query(queryUpdate, function(error, results, fields) {
-            if (error) {
-              res.send({
-                code: 400,
-                failed: "an error ocurred"
-              });
-            } else {
-              message = "Order Detail successfully updated!";
-              // res.render('.ejs', {
-              //     message
-              //     title: Update Order
-              // })
-              console.log(message);
-            }
+    db.query(queryUpdate, function(err, results, fields) {
+      let querySearch = `SELECT * FROM payment_details WHERE payment_no = ${payment_no}`;
+      var json;
+      db.query(querySearch, function(error, results, fields) {
+        var string = JSON.stringify(results);
+        json = JSON.parse(string);
+        json[0].payment_date = json[0].payment_date.split("T")[0];
+        if (err) {
+          console.log(err);
+          res.render("M2/displayUpdateConfirm.ejs", {
+            title: "Update Payment Detail",
+            message: "Error in Updating. Please check input.",
+            found: true,
+            payment: json[0]
+          });
+        } else {
+          res.render("M2/displayUpdateConfirm.ejs", {
+            title: "Update Payment Detail",
+            message: "Payment Detail updated successfully",
+            found: true,
+            payment: json[0]
           });
         }
-      }
+      });
     });
   },
 
@@ -141,7 +185,7 @@ module.exports = {
         if (results.length > 0) {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
-          json[0].payment_date = json[0].payment_date.split('T')[0]
+          json[0].payment_date = json[0].payment_date.split("T")[0];
           res.render("M2/displayPD.ejs", {
             title: "Payment Details",
             message: "Search Payment Details",

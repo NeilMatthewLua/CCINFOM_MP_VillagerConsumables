@@ -56,8 +56,61 @@ module.exports = {
   },
 
   updateResPage: (req, res) => {
-    res.render("M1/updateRes", {
-      message: ""
+    res.render("M1/updateRes.ejs", {
+      message: "Update Resident",
+      title: "Update Resident"
+    });
+  },
+
+  updateResResult: (req, res) => {
+    let resident_email = req.body.resident_email;
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M1/updateRes", {
+          title: "Update Residents",
+          message: "Invalid Input. Please double check."
+        });
+      } else {
+        if (results.length < 1) {
+          res.render("M1/updateRes", {
+            title: "Update Order",
+            message: "Resident Email does not exist!"
+          });
+        } else {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M1/displayUpdateRes", {
+            title: "Update Order",
+            message: "Update Order",
+            found: true,
+            resident: json[0]
+          });
+        }
+      }
+    });
+  },
+
+  updateResDetails: (req, res) => {
+    let resident_email = req.query.resident_email;
+
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M1/updateRes", {
+          title: "Update Resident",
+          message: "Invalid Input. Please double check."
+        });
+      } else {
+        var string = JSON.stringify(results);
+        var json = JSON.parse(string);
+        res.render("M1/displayUpdateConfirm", {
+          title: "Update Resident",
+          message: "Update Resident",
+          found: true,
+          resident: json[0]
+        });
+      }
     });
   },
 
@@ -67,47 +120,36 @@ module.exports = {
     let user_email = req.body.user_email;
     let householdID = req.body.householdID;
 
-    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
-
-    db.query(querySearch, function(error, results, fields) {
-      if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
-        });
-      } else {
-        if (results.length < 1) {
-          message = "resident_email does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     title: "Update Resident Detail"
-          // })
-          console.log("resident_email does not exist!");
-        } else {
-          let queryUpdate = `
+    let queryUpdate = `
                     UPDATE residents 
                     SET application_status =  '${application_status}', 
                     user_email =  '${user_email}', 
                     householdID = ${householdID} 
                     WHERE resident_email = '${resident_email}';`;
+    db.query(queryUpdate, function(err, results, fields) {
+      let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
+      var json;
+      db.query(querySearch, function(error, results, fields) {
+        var string = JSON.stringify(results);
+        json = JSON.parse(string);
 
-          db.query(queryUpdate, function(error, results, fields) {
-            if (error) {
-              res.send({
-                code: 400,
-                failed: "an error ocurred"
-              });
-            } else {
-              message = "Resident successfully updated!";
-              // res.render('.ejs', {
-              //     message
-              //     title: Update Order
-              // })
-              console.log(message);
-            }
+        if (err) {
+          console.log(err);
+          res.render("M1/displayUpdateConfirm.ejs", {
+            title: "Update Resident",
+            message: "Error in Updating. Please check input.",
+            found: true,
+            resident: json[0]
+          });
+        } else {
+          res.render("M1/displayUpdateConfirm.ejs", {
+            title: "Update Resident",
+            message: "Resident updated successfully",
+            found: true,
+            resident: json[0]
           });
         }
-      }
+      });
     });
   },
 
