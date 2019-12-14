@@ -141,6 +141,7 @@ module.exports = {
         if (results.length > 0) {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
+          json[0].payment_date = json[0].payment_date.split('T')[0]
           res.render("M2/displayPD.ejs", {
             title: "Payment Details",
             message: "Search Payment Details",

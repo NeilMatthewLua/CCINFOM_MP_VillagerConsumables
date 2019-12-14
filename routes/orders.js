@@ -109,9 +109,9 @@ module.exports = {
             message: "OrderID does not exist!"
           });
         } else {
-          res.redirect("/ordersUpdate/" + );
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
+       
           res.render("GL/displayUpdateOrder.ejs", {
             title: "Update Order",
             message: "Update Order",
@@ -201,6 +201,7 @@ module.exports = {
           //Perform parsing to be able to access json
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
+          json[0].order_date = json[0].order_date.split('T')[0]
           res.render("GL/displayOrder.ejs", {
             title: "Search Order",
             message: "Search Order",
