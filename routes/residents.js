@@ -227,5 +227,52 @@ module.exports = {
         }
       }
     });
+  },
+  
+  reportResPage: (req, res) => {
+    res.render("M1/genRepDaily", {
+      title: "Daily Report Generation",
+      message: "Daily Report Generation"
+    });
+  },
+
+  reportRes: (req, res) => {
+    let order_month = req.body.order_month;
+    let order_year = req.body.order_year;
+
+    let querySearch = `SELECT  DAY(o.order_date) AS DAY, COUNT(o.orderID) AS TOTAL_COMPLETED_ORDER, SUM(pd.amount_paid) AS TOTAL_AMOUNT
+    FROM	orders o
+      JOIN payment_details pd
+        ON	 pd.orderID = o.orderID
+    WHERE 	YEAR(o.order_date) = '${order_year}'
+      AND  MONTH	(o.order_date) = '${order_month}'
+       AND 	o.status = 'D' 
+    GROUP BY	DAY(o.order_date)
+    ;`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.send({
+          code: 400,
+          failed: "error ocurred"
+        });
+      } else {
+        if (results.length > 0) {
+          message = `Daily Report for Year ${order_year} Month ${order_month}`;
+          res.render('M1/displayReportRes', {
+              message,
+              title: "Daily Order Report",
+              results: results
+          })
+        } else {
+          message = "No Results!";
+          res.render('M1/displayReportRes', {
+              message,
+              title: "Daily Order Report",
+              results: ""
+          })
+        }
+      }
+    });
   }
 };

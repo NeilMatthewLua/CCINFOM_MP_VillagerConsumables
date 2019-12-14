@@ -27,12 +27,12 @@
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item" role="presentation">
-              <a class="nav-link" href="/" style="font-size: 36px;"
+              <a class="nav-link active" href="/" style="font-size: 36px;"
                 >GL</a
               >
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" href="/M1" style="font-size: 36px;">M1</a>
+              <a class="nav-link" href="/M1" style="font-size: 36px;">M1</a>
             </li>
             <li class="nav-item" role="presentation">
               <a class="nav-link" href="/M2" style="font-size: 36px;">M2</a>
@@ -45,22 +45,24 @@
         <% if (message) { %>
           <p class="text-center text-danger"><%= message %></p>
           <% } %>
-      <form action="" method = "POST">
+      <form action="" method="post">
       <div class="form-group col-md-4">
         <input
           type="text"
           class="form-control"
-          name="resident_email"
-          id="resident_email"
-          placeholder="Enter Resident Email"
+          style = "margin-top: 15px"
+          name="order_year"
+          id="order_year"
+          placeholder="Order Year"
           required
         />
         <button
-        class="btn btn-primary"
-        type="submit"
-        style="margin-right: 10px; margin-top: 15px;"
-      >Search
-    </button>
+          class="btn btn-primary"
+          type="submit"
+          style="margin-right: 10px; margin-top: 15px"
+        >
+          GENERATE REPORT
+        </button>
       </form>
       </div>
     </div>

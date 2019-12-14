@@ -110,7 +110,7 @@
               class="form-control"
               name="cancelled_by"
               id="cancelled_by"
-              placeholder="Cancelled By (U/S)"
+              placeholder=" -"
               value="<%= order.cancelled_by %>"
             />
           </div>
@@ -124,7 +124,7 @@
               class="form-control"
               name="cancel_date"
               id="cancel_date"
-              placeholder="Cancel Date (YYYY-MM-DD)"
+              placeholder=" -"
               value="<%= order.cancel_date %>"
             />
           </div>
@@ -138,7 +138,7 @@
               class="form-control"
               name="cancel_reason"
               id="cancel_reason"
-              placeholder="Cancel Reason"
+              placeholder=" -"
               value="<%= order.cancel_reason %>"
             />
           </div>
@@ -154,6 +154,20 @@
               id="location"
               placeholder="Location"
               value="<%= order.location %>"
+            />
+          </div>
+        </div>
+ 
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Location</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="remark"
+              id="remark"
+              placeholder="Remark"
+              value="<%= order.remark %>"
             />
           </div>
         </div>

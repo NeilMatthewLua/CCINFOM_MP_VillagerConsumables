@@ -124,7 +124,7 @@ module.exports = {
     let payment_no = req.body.payment_no;
     let payment_date = req.body.payment_date;
     let payment_time = req.body.payment_time;
-    let penalty = req.body.penalty;
+    let penalty = req.body.penalty == "" ? 0 : req.body.penalty;
     let amount_paid = req.body.amount_paid;
 
     let queryUpdate = `
@@ -235,6 +235,47 @@ module.exports = {
           //     results: results
           // })
           console.log("OrderID does not exist!");
+        }
+      }
+    });
+  },
+
+  reportPDPage: (req, res) => {
+    res.render("M2/genRepResi", {
+      title: "Monthly Average Rating Report Generation",
+      message: "Monthly Average Rating Report Generation"
+    });
+  },
+
+  reportPD: (req, res) => {
+    let order_year = req.body.order_year;
+
+    let querySearch = `SELECT 		MONTH(o.order_date) AS Month, ROUND(AVG(o.timeliness),2) AS Timeliness, ROUND(AVG(o.politeness),2) AS Politeness, ROUND(AVG(o.cust_satisfaction),2) AS Cust_Satisfaction, ROUND(AVG(total_rating),2) AS Total_Rating
+    FROM		orders o
+    WHERE		o.status = 'C'AND YEAR(o.order_date) = '${order_year}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.send({
+          code: 400,
+          failed: "error ocurred"
+        });
+      } else {
+        if(results.length > 0 && results[0].Month != null) {
+          message = `Rating Report for Year ${order_year}`;    
+          res.render('M2/displayReportPD', {
+              message,
+              title: "Monthly Average Rating Report Generation",
+              message : `Monthly Average Rating Report for Week ${order_year}`,  
+              results: results
+          })
+        } else {
+          message = "No Results!";
+          res.render('M2/displayReportPD', {
+              message,
+              title: "Monthly Average Rating Report Generation",
+              results: ""
+          })
         }
       }
     });
