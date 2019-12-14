@@ -87,7 +87,7 @@ module.exports = {
   },
 
   updateOrderPage: (req, res) => {
-    res.render("GL/updateOrder.ejs", {
+    res.render("GL/updateOrder", {
       message: "Update Order",
       title: "Update Order"
     });
@@ -104,7 +104,7 @@ module.exports = {
         });
       } else {
         if (results.length < 1) {
-          res.render("GL/updateOrder", {
+          res.render("GL/updateOrder.ejs", {
             title: "Update Order",
             message: "OrderID does not exist!"
           });
@@ -112,7 +112,9 @@ module.exports = {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
           json[0].order_date = json[0].order_date.split("T")[0];
-          json[0].cancel_date == null ? null : json[0].cancel_date.split("T")[0];
+          json[0].cancel_date = (json[0].cancel_date == null
+            ? null
+            : json[0].cancel_date.split("T")[0]);
           res.render("GL/displayUpdateOrder", {
             title: "Update Order",
             message: "Update Order",
@@ -137,7 +139,6 @@ module.exports = {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
         json[0].order_date = json[0].order_date.split("T")[0];
-        console.log(json[0].cancel_date)
         json[0].cancel_date == null ? null : json[0].cancel_date.split("T")[0];
         res.render("GL/displayUpdateConfirm.ejs", {
           title: "Update Order",
@@ -162,8 +163,8 @@ module.exports = {
       req.body.cancel_reason == ""
         ? "NULL"
         : "'" + req.body.cancel_reason + "'";
-    let location = req.body.location;
     let remark = req.body.remark == "" ? "NULL" : "'" + req.body.remark + "'";
+    let location = req.body.location;
     let timeliness = req.body.timeliness;
     let politeness = req.body.politeness;
     let cust_satisfaction = req.body.cust_satisfaction;
@@ -180,9 +181,9 @@ module.exports = {
                         status = '${status}', 
                         cancelled_by = ${cancelled_by}, 
                         cancel_date = ${cancel_date}, 
-                        cancel_reason = ${cancel_reason}, 
+                        cancel_reason = ${cancel_reason},  
                         location = '${location}', 
-                        remark = ${remark},
+                        remark =${remark},
                         timeliness = '${timeliness}', 
                         politeness = '${politeness}', 
                         cust_satisfaction = '${cust_satisfaction}', 
@@ -191,7 +192,7 @@ module.exports = {
                         resident_email = '${resident_email}', 
                         resegroup_ID = ${resegroup_ID}
                     WHERE orderID = ${orderID};`;
-                  
+
     db.query(queryUpdate, function(err, results, fields) {
       let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
       var json;
@@ -209,7 +210,7 @@ module.exports = {
             order: json[0]
           });
         } else {
-          res.render("GL/displayUpdateOrder", {
+          res.render("GL/displayUpdateConfirm", {
             title: "Update Order",
             message: "Order updated successfully",
             found: true,
@@ -244,7 +245,9 @@ module.exports = {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
           json[0].order_date = json[0].order_date.split("T")[0];
-          json[0].cancel_date == null ? null : json[0].cancel_date.split("T")[0];
+          json[0].cancel_date == null
+            ? null
+            : json[0].cancel_date.split("T")[0];
           res.render("GL/displayOrder.ejs", {
             title: "Search Order",
             message: "Search Order",
@@ -261,7 +264,6 @@ module.exports = {
       }
     });
   },
-
   reportOrderPage: (req, res) => {
     res.render("GL/genRepMonthly", {
       title: "Monthly Report Generation",
@@ -295,24 +297,23 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if(results.length > 0  && results[0].MONTH != null) {
-          message = "";    
-          res.render('GL/displayReportOrder', {
-              message,
-              title: "Monthly Order Report",
-              message : `Monthly Order Report for Year ${order_year}`,  
-              results: results
-          })
+        if (results.length > 0 && results[0].MONTH != null) {
+          message = "";
+          res.render("GL/displayReportOrder", {
+            message,
+            title: "Monthly Order Report",
+            message: `Monthly Order Report for Year ${order_year}`,
+            results: results
+          });
         } else {
           message = "No Results!";
-          res.render('GL/displayReportOrder', {
-              message,
-              title: "Order Order Report",
-              results: ""
-          })
+          res.render("GL/displayReportOrder", {
+            message,
+            title: "Order Order Report",
+            results: ""
+          });
         }
       }
     });
   }
-
 };

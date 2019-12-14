@@ -69,7 +69,7 @@ module.exports = {
       if (error) {
         res.render("M1/updateRes", {
           title: "Update Residents",
-          message: "Invalid Input. Please double check."
+          message: "Invalid Input. Please try again."
         });
       } else {
         if (results.length < 1) {
@@ -134,7 +134,7 @@ module.exports = {
         json = JSON.parse(string);
 
         if (err) {
-          console.log(err);
+          console.log(err); 
           res.render("M1/displayUpdateConfirm.ejs", {
             title: "Update Resident",
             message: "Error in Updating. Please check input.",
@@ -142,12 +142,7 @@ module.exports = {
             resident: json[0]
           });
         } else {
-          res.render("M1/displayUpdateConfirm.ejs", {
-            title: "Update Resident",
-            message: "Resident updated successfully",
-            found: true,
-            resident: json[0]
-          });
+          res.redirect("/M1");
         }
       });
     });
@@ -167,9 +162,10 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M1/displayRes.ejs", {
+          title: "Search Resident",
+          message: "Invalid Input. Please try again.",
+          found: false
         });
       } else {
         if (results.length > 0) {
@@ -192,9 +188,70 @@ module.exports = {
     });
   },
 
-  deleteRes: (req, res) => {
+  deleteResPage: (req, res) => {
     res.render("M1/deleteRes", {
-      message: ""
+      message: "Delete Resident",
+      title: "Delete Resident"
+    });
+  },
+
+  deleteResResult: (req, res) => {
+    let resident_email = req.body.resident_email;
+
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M1/deleteRes.ejs", {
+          title: "Delete Resident",
+          message: "Invalid Input. Please try again.",
+          found: false
+        });
+      } else {
+        if (results.length > 0) {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M1/displayDeleteRes.ejs", {
+            title: "Delete Resident",
+            message: "Delete Resident",
+            found: true,
+            resident: json[0]
+          });
+        } else {
+          res.render("M1/deleteRes.ejs", {
+            title: "Delete Resident",
+            message: "Resident Email not found.",
+            found: false
+          });
+        }
+      }
+    });
+  },
+
+  deleteResDetails: (req, res) => {
+    let resident_email = req.query.resident_email;
+
+    let querySearch = `SELECT * FROM residents WHERE resident_email = '${resident_email}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M1/deleteRes.ejs", {
+          title: "Delete Resident",
+          message: "Invalid Input. Please try again.",
+          found: false
+        });
+      } else {
+        if (results.length > 0) {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M1/displayDeleteConfirm.ejs", {
+            title: "Delete Resident",
+            message: "Delete Resident",
+            found: true,
+            resident: json[0]
+          });
+        }
+      }
     });
   },
 
@@ -205,30 +262,16 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M1/deleteRes.ejs", {
+          title: "Delete Resident",
+          message: "Error in deleting record.",
+          found: false
         });
       } else {
-        if (reults.length > 0) {
-          message = "Resident successfully deleted!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log(message);
-        } else {
-          message = "resident_email does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log("resident_email does not exist!");
-        }
+        res.redirect("/M1");
       }
     });
   },
-  
   reportResPage: (req, res) => {
     res.render("M1/genRepDaily", {
       title: "Daily Report Generation",
@@ -259,18 +302,18 @@ module.exports = {
       } else {
         if (results.length > 0) {
           message = `Daily Report for Year ${order_year} Month ${order_month}`;
-          res.render('M1/displayReportRes', {
-              message,
-              title: "Daily Order Report",
-              results: results
-          })
+          res.render("M1/displayReportRes", {
+            message,
+            title: "Daily Order Report",
+            results: results
+          });
         } else {
           message = "No Results!";
-          res.render('M1/displayReportRes', {
-              message,
-              title: "Daily Order Report",
-              results: ""
-          })
+          res.render("M1/displayReportRes", {
+            message,
+            title: "Daily Order Report",
+            results: ""
+          });
         }
       }
     });

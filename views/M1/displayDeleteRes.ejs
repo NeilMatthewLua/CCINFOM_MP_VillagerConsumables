@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean">
+      <div class="container">
+        <a class="navbar-brand" href="/" style="font-size: 36px;">BAYANETWORK</a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
+        >
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/" style="font-size: 36px;">GL</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" href="/M1" style="font-size: 36px;"
+                >M1</a
+              >
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" href="/M2" style="font-size: 36px;">M2</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <% if (message) { %>
+      <p class="text-center text-danger"><%= message %></p>
+      <% } %> <% if (found) { %>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Resident Email</label>
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            name="resident_email"
+            id="resident_email"
+            placeholder="-"
+            value="<%= resident.resident_email %>"
+            readonly
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Application Status (A/P)</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="application_status"
+              id="application_status"
+              placeholder="-"
+              value="<%= resident.application_status %>"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">User Email</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="user_email"
+              id="user_email"
+              placeholder="-"
+              value="<%= resident.user_email %>"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Household ID</label>
+          <div class="form-group col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              name="householdID"
+              id="householdID"
+              placeholder="-"
+              value="<%= resident.householdID %>"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="location.href = 'deleteRes/<%= resident.resident_email%>?resident_email=<%= resident.resident_email%>'"
+        style="margin-right: 10px;"
+      >
+        Delete Resident
+      </button>
+      <% } else { %>
+      <p class="text-center">
+        Resident Not Found. Go <a href="/M1/addRes">here</a> to add residents.
+      </p>
+      <% } %>
+    </div>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

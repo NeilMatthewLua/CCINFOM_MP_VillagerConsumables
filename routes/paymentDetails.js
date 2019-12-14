@@ -152,12 +152,7 @@ module.exports = {
             payment: json[0]
           });
         } else {
-          res.render("M2/displayUpdateConfirm.ejs", {
-            title: "Update Payment Detail",
-            message: "Payment Detail updated successfully",
-            found: true,
-            payment: json[0]
-          });
+          res.redirect("/M2");
         }
       });
     });
@@ -177,9 +172,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M2/updatePD", {
+          title: "Update Payment Details",
+          message: "Invalid Input. Please double check."
         });
       } else {
         if (results.length > 0) {
@@ -205,41 +200,88 @@ module.exports = {
 
   deletePDPage: (req, res) => {
     res.render("M2/deletePD", {
-      message: ""
+      message: "Delete Payment Detail",
+      title: "Delete Payment Detail"
     });
   },
 
-  deletePD: (req, res) => {
-    let orderID = req.body.orderID;
+  deletePDResult: (req, res) => {
+    let payment_no = req.body.payment_no;
 
-    let querySearch = `DELETE FROM payment_details WHERE orderID = '${orderID}'`;
+    let querySearch = `SELECT * FROM payment_details WHERE payment_no = '${payment_no}'`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M2/deletePD.ejs", {
+          title: "Delete Payment Detail",
+          message: "Invalid Input. Please try again.",
+          found: false
         });
       } else {
         if (results.length > 0) {
-          message = "Payment Detail successfully deleted!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log(message);
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M2/displayDeletePD.ejs", {
+            title: "Delete Payment Detail",
+            message: "Delete Payment Detail",
+            found: true,
+            payment: json[0]
+          });
         } else {
-          message = "OrderID does not exist!";
-          // res.render('.ejs', {
-          //     message
-          //     results: results
-          // })
-          console.log("OrderID does not exist!");
+          res.render("M2/deletePD.ejs", {
+            title: "Delete Resident",
+            message: "Payment Number not found.",
+            found: false
+          });
         }
       }
     });
   },
 
+  deletePDDetails: (req, res) => {
+    let payment_no = req.query.payment_no;
+
+    let querySearch = `SELECT * FROM payment_details WHERE payment_no = ${payment_no}`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M2/deleteRes.ejs", {
+          title: "Delete Payment Details",
+          message: "Invalid Input. Please try again.",
+          found: false
+        });
+      } else {
+        if (results.length > 0) {
+          var string = JSON.stringify(results);
+          var json = JSON.parse(string);
+          res.render("M2/displayDeleteConfirm.ejs", {
+            title: "Delete Payment Details",
+            message: "Delete Payment Details",
+            found: true,
+            payment: json[0]
+          });
+        }
+      }
+    });
+  },
+
+  deletePD: (req, res) => {
+    let payment_no = req.body.payment_no;
+
+    let querySearch = `DELETE FROM payment_details WHERE payment_no = '${payment_no}'`;
+
+    db.query(querySearch, function(error, results, fields) {
+      if (error) {
+        res.render("M2/deleteRes.ejs", {
+          title: "Delete Resident",
+          message: "Error in deleting record.",
+          found: false
+        });
+      } else {
+        res.redirect("/M2");
+      }
+    });
+  },
   reportPDPage: (req, res) => {
     res.render("M2/genRepResi", {
       title: "Monthly Average Rating Report Generation",
@@ -261,21 +303,21 @@ module.exports = {
           failed: "error ocurred"
         });
       } else {
-        if(results.length > 0 && results[0].Month != null) {
-          message = `Rating Report for Year ${order_year}`;    
-          res.render('M2/displayReportPD', {
-              message,
-              title: "Monthly Average Rating Report Generation",
-              message : `Monthly Average Rating Report for Week ${order_year}`,  
-              results: results
-          })
+        if (results.length > 0 && results[0].Month != null) {
+          message = `Rating Report for Year ${order_year}`;
+          res.render("M2/displayReportPD", {
+            message,
+            title: "Monthly Average Rating Report Generation",
+            message: `Monthly Average Rating Report for Week ${order_year}`,
+            results: results
+          });
         } else {
           message = "No Results!";
-          res.render('M2/displayReportPD', {
-              message,
-              title: "Monthly Average Rating Report Generation",
-              results: ""
-          })
+          res.render("M2/displayReportPD", {
+            message,
+            title: "Monthly Average Rating Report Generation",
+            results: ""
+          });
         }
       }
     });
