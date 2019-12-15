@@ -294,7 +294,9 @@ module.exports = {
 
     let querySearch = `SELECT 		MONTH(o.order_date) AS Month, ROUND(AVG(o.timeliness),2) AS Timeliness, ROUND(AVG(o.politeness),2) AS Politeness, ROUND(AVG(o.cust_satisfaction),2) AS Cust_Satisfaction, ROUND(AVG(total_rating),2) AS Total_Rating
     FROM		orders o
-    WHERE		o.status = 'C'AND YEAR(o.order_date) = '${order_year}'`;
+    WHERE		o.status = 'D'AND YEAR(o.order_date) = '${order_year}'
+    GROUP BY MONTH(o.order_date)
+    ORDER BY MONTH(o.order_date)`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
@@ -308,7 +310,7 @@ module.exports = {
           res.render("M2/displayReportPD", {
             message,
             title: "Monthly Average Rating Report Generation",
-            message: `Monthly Average Rating Report for Week ${order_year}`,
+            message: `Monthly Average Rating Report for Year ${order_year}`,
             results: results
           });
         } else {

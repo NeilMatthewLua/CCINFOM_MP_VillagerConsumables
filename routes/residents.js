@@ -291,6 +291,7 @@ module.exports = {
       AND  MONTH	(o.order_date) = '${order_month}'
        AND 	o.status = 'D' 
     GROUP BY	DAY(o.order_date)
+    ORDER BY DAY(o.order_date)
     ;`;
 
     db.query(querySearch, function(error, results, fields) {

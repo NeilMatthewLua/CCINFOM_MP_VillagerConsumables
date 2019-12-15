@@ -287,17 +287,21 @@ module.exports = {
     FROM		(	SELECT		MONTH(o.order_date) AS MONTH ,COUNT(o.status) AS NUM_COMPLETED
             FROM 		orders o
             WHERE		o.status = 'D' AND YEAR(o.order_date) = '${order_year}'
+            GROUP BY    MONTH(o.order_date)
             ORDER BY 	o.status, MONTH(o.order_date)
           ) A LEFT JOIN (		SELECT		MONTH(o.order_date)	AS MONTH ,COUNT(o.status)	AS NUM_CANCELLED
                     FROM 		orders o
                     WHERE		o.status = 'C' AND YEAR(o.order_date) = '${order_year}'
+                    GROUP BY    MONTH(o.order_date)
                     ORDER BY 	o.status, MONTH(o.order_date) ) B	ON A.MONTH = B.MONTH
             LEFT JOIN (     SELECT		MONTH(o.order_date)	AS MONTH, SUM(pd.amount_paid)	AS TOTAL_SALES
                     FROM 		orders o
                       JOIN		payment_details pd
                       ON 			pd.orderID = o.orderID
                     WHERE		o.status = 'C'AND YEAR(o.order_date) = '${order_year}'
-                    ORDER BY 	o.status, MONTH(o.order_date) ) C ON B.MONTH = C.MONTH;`;
+                    GROUP BY MONTH(o.order_date)
+                    ORDER BY 	o.status, MONTH(o.order_date) ) C ON B.MONTH = C.MONTH
+                    ;`;
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
