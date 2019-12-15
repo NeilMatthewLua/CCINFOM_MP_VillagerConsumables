@@ -18,9 +18,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M2/addPD", {
+          title: "Add Payment Detail",
+          message: "Invalid Input. Please double check."
         });
       } else {
         if (results.length > 0) {
@@ -37,9 +37,9 @@ module.exports = {
 
           db.query(queryAdd, function(error, results, fields) {
             if (error) {
-              res.send({
-                code: 400,
-                failed: "error ocurred"
+              res.render("M2/addPD", {
+                title: "Add Payment Detail",
+                message: "Invalid Input. Please double check."
               });
             } else {
               message = "Payment Detail successfully added!";
@@ -298,9 +298,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M2/genRepResi", {
+          title: "Monthly Average Rating Report Generation",
+          message: "Error occurred."
         });
       } else {
         if (results.length > 0 && results[0].Month != null) {

@@ -56,8 +56,7 @@ module.exports = {
                         ${cancel_date}, 
                         ${cancel_reason}, 
                         '${location}',
-                        ${remark}, 
-                        '${location}', 
+                        ${remark},  
                         ${timeliness}, 
                         ${politeness}, 
                         ${cust_satisfaction}, 
@@ -255,9 +254,9 @@ module.exports = {
           var json = JSON.parse(string);
           json[0].order_date = json[0].order_date.split("T")[0];
           json[0].cancel_date =
-          json[0].cancel_date == null
-            ? null
-            : json[0].cancel_date.split("T")[0];
+            json[0].cancel_date == null
+              ? null
+              : json[0].cancel_date.split("T")[0];
           res.render("GL/displayOrder.ejs", {
             title: "Search Order",
             message: "Search Order",
@@ -302,7 +301,7 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        console.log(error); 
+        console.log(error);
         res.render("GL/genRepMonthly", {
           title: "Monthly Report Generation",
           message: "An error occurred"

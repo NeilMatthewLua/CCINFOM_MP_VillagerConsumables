@@ -16,9 +16,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M1/addRes", {
+          title: "Add Resident",
+          message: "Resident already exists"
         });
       } else {
         if (results.length < 1) {
@@ -33,9 +33,9 @@ module.exports = {
 
           db.query(queryAdd, function(error, results, fields) {
             if (error) {
-              res.send({
-                code: 400,
-                failed: "error ocurred"
+              res.render("M1/addRes", {
+                title: "Add Resident",
+                message: "Please check inputs."
               });
             } else {
               message = "Resident successfully added!";
@@ -134,7 +134,7 @@ module.exports = {
         json = JSON.parse(string);
 
         if (err) {
-          console.log(err); 
+          console.log(err);
           res.render("M1/displayUpdateConfirm.ejs", {
             title: "Update Resident",
             message: "Error in Updating. Please check input.",
@@ -295,9 +295,9 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        res.render("M1/genRepDaily", {
+          title: "Daily Report Generation",
+          message: "Error occurred"
         });
       } else {
         if (results.length > 0) {
