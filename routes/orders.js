@@ -21,10 +21,16 @@ module.exports = {
         : "'" + req.body.cancel_reason + "'";
     let location = req.body.location;
     let remark = req.body.remark == "" ? "NULL" : "'" + req.body.remark + "'";
-    let timeliness = req.body.timeliness;
-    let politeness = req.body.politeness;
-    let cust_satisfaction = req.body.cust_satisfaction;
-    let total_rating = req.body.total_rating;
+    let timeliness =
+      req.body.timeliness == "" ? "NULL" : "'" + req.body.timeliness + "'";
+    let politeness =
+      req.body.politeness == "" ? "NULL" : "'" + req.body.politeness + "'";
+    let cust_satisfaction =
+      req.body.cust_satisfaction == ""
+        ? "NULL"
+        : "'" + req.body.cust_satisfaction + "'";
+    let total_rating =
+      req.body.total_rating == "" ? "NULL" : "'" + req.body.total_rating + "'";
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
     let resegroup_ID =
@@ -170,10 +176,16 @@ module.exports = {
         : "'" + req.body.cancel_reason + "'";
     let remark = req.body.remark == "" ? "NULL" : "'" + req.body.remark + "'";
     let location = req.body.location;
-    let timeliness = req.body.timeliness;
-    let politeness = req.body.politeness;
-    let cust_satisfaction = req.body.cust_satisfaction;
-    let total_rating = req.body.total_rating;
+    let timeliness =
+      req.body.timeliness == "" ? "NULL" : "'" + req.body.timeliness + "'";
+    let politeness =
+      req.body.politeness == "" ? "NULL" : "'" + req.body.politeness + "'";
+    let cust_satisfaction =
+      req.body.cust_satisfaction == ""
+        ? "NULL"
+        : "'" + req.body.cust_satisfaction + "'";
+    let total_rating =
+      req.body.total_rating == "" ? "NULL" : "'" + req.body.total_rating + "'";
     let supplier_email = req.body.supplier_email;
     let resident_email = req.body.resident_email;
     let resegroup_ID =
