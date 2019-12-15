@@ -69,6 +69,7 @@ module.exports = {
 
           db.query(queryAdd, function(error, results, fields) {
             if (error) {
+              console.log(error);
               res.render("GL/addOrder", {
                 message: "Invalid Input. Please double check your input.",
                 title: "Add Order"
@@ -78,7 +79,6 @@ module.exports = {
                 message: "Order successfully Added!",
                 title: "Add Order"
               });
-              console.log(message);
             }
           });
         }
@@ -98,6 +98,7 @@ module.exports = {
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
     db.query(querySearch, function(error, results, fields) {
       if (error) {
+        console.log(error);
         res.render("GL/updateOrder", {
           title: "Update Order",
           message: "Invalid Input. Please double check."
@@ -112,9 +113,10 @@ module.exports = {
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
           json[0].order_date = json[0].order_date.split("T")[0];
-          json[0].cancel_date = (json[0].cancel_date == null
-            ? null
-            : json[0].cancel_date.split("T")[0]);
+          json[0].cancel_date =
+            json[0].cancel_date == null
+              ? null
+              : json[0].cancel_date.split("T")[0];
           res.render("GL/displayUpdateOrder", {
             title: "Update Order",
             message: "Update Order",
@@ -131,6 +133,7 @@ module.exports = {
     let querySearch = `SELECT * FROM orders WHERE orderID = '${orderID}'`;
     db.query(querySearch, function(error, results, fields) {
       if (error) {
+        console.log(error);
         res.render("GL/updateOrder", {
           title: "Update Order",
           message: "Invalid Input. Please double check."
@@ -139,7 +142,10 @@ module.exports = {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
         json[0].order_date = json[0].order_date.split("T")[0];
-        json[0].cancel_date == null ? null : json[0].cancel_date.split("T")[0];
+        json[0].cancel_date =
+          json[0].cancel_date == null
+            ? null
+            : json[0].cancel_date.split("T")[0];
         res.render("GL/displayUpdateConfirm.ejs", {
           title: "Update Order",
           message: "Update Order",
@@ -200,7 +206,10 @@ module.exports = {
         var string = JSON.stringify(results);
         json = JSON.parse(string);
         json[0].order_date = json[0].order_date.split("T")[0];
-        json[0].cancel_date == null ? null : json[0].cancel_date.split("T")[0];
+        json[0].cancel_date =
+          json[0].cancel_date == null
+            ? null
+            : json[0].cancel_date.split("T")[0];
         if (err) {
           console.log(err);
           res.render("GL/displayUpdateConfirm", {
@@ -235,16 +244,17 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
+        console.log(error);
         res.render("GL/searchOrder.ejs", {
           title: "Search Order",
           message: "Invalid Input. Please double check."
         });
       } else {
         if (results.length > 0) {
-          //Perform parsing to be able to access json
           var string = JSON.stringify(results);
           var json = JSON.parse(string);
           json[0].order_date = json[0].order_date.split("T")[0];
+          json[0].cancel_date =
           json[0].cancel_date == null
             ? null
             : json[0].cancel_date.split("T")[0];
@@ -292,9 +302,10 @@ module.exports = {
 
     db.query(querySearch, function(error, results, fields) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred"
+        console.log(error); 
+        res.render("GL/genRepMonthly", {
+          title: "Monthly Report Generation",
+          message: "An error occurred"
         });
       } else {
         if (results.length > 0 && results[0].MONTH != null) {
